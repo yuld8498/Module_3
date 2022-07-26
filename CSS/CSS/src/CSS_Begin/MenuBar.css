@@ -37,7 +37,7 @@ body {
     position: absolute;
     top: 30px;
     visibility: hidden;
-    text-align: left;
+    /*text-align: left;*/
 }
 
 #menu ul li:hover ul {

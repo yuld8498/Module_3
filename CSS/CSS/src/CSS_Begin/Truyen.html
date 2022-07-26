@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<style>
+   ul>li{
+       float: left;
+       width: 30%;
+       height: 40px;
+       list-style: none;
+   }
+   .theloai>li,.danhsach>li{
+       float: none;
+       background-color: #ef9ea0;
+       padding-top: 10px;
+       border: 2px solid white;
+       text-align: center;
+       border-radius: 5px;
+       cursor: pointer;
+       visibility: hidden;
+   }
+   .menu-bar>h2{
+       cursor: pointer;
+       background-color: #f87a7d;
+       width: 150px;
+       height: 60px;
+       border: 5px solid white;
+   }
+   .menu-bar:hover li{
+       visibility: visible;
+   }
+</style>
+<div id="heading">
+    <ul>
+        <li><h1>Truyện Tranh</h1></li>
+        <li class="menu-bar"><h2>Danh sách</h2>
+            <ul class = "danhsach">
+                <li>Truyện Hay</li>
+                <li>Truyện Mới</li>
+                <li>Truyện Mới cập Nhật</li>
+            </ul>
+        </li>
+        <li class="menu-bar"><h2>Thể Loại</h2>
+            <ul class = "theloai">
+                <li>Kiếm Hiệp</li>
+                <li>Tiểu Thuyết</li>
+                <li>Truyện Ngắn</li>
+            </ul>
+        </li>
+    </ul>
+</div>
+</body>
+</html>
