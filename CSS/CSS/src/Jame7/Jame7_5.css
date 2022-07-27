@@ -1,0 +1,158 @@
+body{
+    font-family: Arial;
+}
+div{
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+}
+#container{
+    position: relative;
+    height: 600px;
+}
+#header{
+    background-color: #7e7676;
+    width: 100%;
+    height: 50px;
+    border: 1px solid black;
+    position: relative;
+}
+.header-left{
+    color: white;
+    float: left;
+    width: 60%;
+    height: 100%;
+    position: relative;
+}
+.header-right>input{
+    height: 100%;
+    width: 100px;
+    float: right;
+    background-color: #7e7676;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+.header-right>input:hover{
+    background-color: #484545;
+}
+.header-right{
+    color: white;
+    float: left;
+    width: 40%;
+    height: 100%;
+}
+.header-left>ul{
+    margin: 0;
+    padding:0;
+    height: 100%;
+}
+.header-left>ul>li{
+    float: left;
+    width: 18%;
+    height: 100%;
+    list-style: none;
+    cursor: pointer;
+    top: 10px;
+    text-align: center;
+    line-height: 50px;
+    white-space: nowrap;
+}
+.header-left>ul>li>ul{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+.header-left>ul>li>ul>li{
+    list-style: none;
+    background-color: #7e7676;
+    visibility: hidden;
+    margin-bottom: 1px;
+    width: 80%;
+    text-align: center;
+    position: relative;
+}
+.header-left>ul>li>ul>li:hover{
+    background-color: #484545;
+}
+.header-left>ul>li:hover{
+    background-color: #484545;
+}
+.header-left>ul>li:hover li{
+    visibility: visible;
+    z-index: 2;
+}
+#content{
+    position: relative;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 550px;
+    background-color: #9b9696;
+    z-index: 1;
+}
+.content-left{
+    padding: 0;
+    margin: 0;
+    width: 20%;
+    height: 100%;
+    float: left;
+    border: 1px solid black;
+}
+.content-right{
+    padding: 0;
+    margin: 0;
+    width: 20%;
+    height: 100%;
+    float: left;
+    border: 1px solid black;
+}
+.content-mid{
+    margin: 0;
+    padding: 0;
+    width: 60%;
+    height: 100%;
+    float: left;
+}
+.content-mid-top{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 35%;
+    border: 1px solid black;
+}
+.content-mid-bottom{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 65%;
+    border: 1px solid black;
+}
+#footer{
+    margin: 0;
+    padding: 0;
+    position: relative;
+    background-color: #7e7676;
+    width: 100%;
+    height: 50px;
+}
+@media only screen  and (max-width: 46.1875em){
+    #header{
+        margin: 0;
+        padding:0;
+        width: 100%;
+    }
+    .header-left{
+        margin: 0;
+        padding: 0;
+        width: 50%;
+    }
+    .header-right{
+        margin: 0;
+        padding: 0;
+        width: 50%;
+    }
+    .header-left ul li{
+        visibility: hidden;
+    }
+}
