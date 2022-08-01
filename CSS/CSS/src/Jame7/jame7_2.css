@@ -16,7 +16,7 @@ body {
     background-color: black;
     line-height: 30px;
     cursor: pointer;
-}
+    }
 #menu li a{
     text-decoration:none;
     color: white;

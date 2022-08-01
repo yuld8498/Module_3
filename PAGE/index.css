@@ -1,0 +1,213 @@
+@media only screen and (min-width: 768px) {
+    #produc-list {
+        visibility: hidden;
+    }
+
+    #product-tab:hover #produc-list {
+        visibility: visible;
+    }
+
+    #header {
+        height: 115px;
+        border: none;
+    }
+
+    #header-link {
+        height: 100%;
+        box-sizing: border-box;
+    }
+
+    .head-link-logo {
+        width: 15%;
+        float: left;
+    }
+
+    .head-link-logo > img {
+        /*float: left;*/
+        width: 100px;
+        margin-left: 20%;
+    }
+
+    .head-link-center {
+        float: left;
+        width: 60%;
+        padding-top: 30px;
+        font-size: 20px;
+    }
+
+    .head-link-center > ul > li {
+        width: 20%;
+    }
+
+    .head-link-right {
+        width: 24%;
+        padding-top: 30px;
+        float: right;
+        font-size: 20px;
+    }
+
+    .head-link-right li {
+        width: 50%;
+    }
+
+    #login-box {
+        visibility: hidden;
+        width: 100%;
+    }
+
+    #login-box > li {
+        width: 100%;
+    }
+
+    #login:hover #login-box {
+        width: 100%;
+        visibility: visible;
+        background-color: white;
+        font-size: 16px;
+    }
+
+    .list-group-item > input {
+        width: 100%;
+        border-radius: 5px;
+    }
+
+    .nav-tabs {
+        border: none;
+    }
+
+    .nav-tabs .nav-link {
+        border: none;
+    }
+
+    /*Content
+    */
+    #content {
+        width: 100%;
+        height: 600px;
+        background-color: #7e7676;
+    }
+}
+@media only screen and (max-width: 767px)  {
+    #header{
+        width: 50%;
+    }
+    .header-link{
+        width: 100%;
+    }
+    .head-link-logo{
+        width: 100%;
+    }
+    .head-link-center{
+        width: 100%;
+    }
+    .head-link-right{
+        width: 100%;
+    }
+    .head-link-right>ul>li{
+        width: 100%;
+    }
+    .head-link-right>ul>li>ul>li:last-child{
+        width: 50%;
+    }
+    #menu{
+        width: 100%;
+    }
+    #menu>li{
+        width: 100%;
+    }
+    #product-tab{
+        width: 49%;
+        float: left;
+        position: relative;
+    }
+    #produc-list{
+        width: 49%;
+        position: absolute;
+        right: 20px;
+        top: 0;
+        visibility: hidden;
+    }
+}
+
+/*@media only screen and (max-width: 767px) {*/
+/*    #header{*/
+/*        height: 200px;*/
+/*    }*/
+/*    #head-link{*/
+/*        width: 100%;*/
+/*        height: 100%;*/
+/*    }*/
+/*    .head-link-logo > img {*/
+/*        !*float: left;*!*/
+/*        width: 90%;*/
+/*        margin-left: 20%;*/
+/*    }*/
+
+/*    .head-link-logo {*/
+/*        width: 20%;*/
+/*        position: absolute;*/
+/*        left: 35%;*/
+/*    }*/
+
+/*    .head-link-center {*/
+/*        width: 40%;*/
+/*        height: 100%;*/
+/*        position: absolute;*/
+/*    }*/
+
+/*    .head-link-right {*/
+/*        width: 29%;*/
+/*        position: absolute;*/
+/*        right: 0;*/
+/*    }*/
+
+/*    #menu {*/
+/*        !*visibility: hidden;*!*/
+/*        display: block;*/
+/*        border: 1px solid black;*/
+/*        width: 500px;*/
+/*        font-size: 20px;*/
+/*        top: 10px;*/
+/*    }*/
+/*    #menu>li{*/
+/*        width: 100%;*/
+/*        height: 50px;*/
+/*        margin: 10px 10px;*/
+/*    }*/
+/*    #menu>li>a{*/
+/*        width: 100%;*/
+/*        height: 100%;*/
+/*        font-size: 20px;*/
+/*    }*/
+/*    #head-link-hambeger{*/
+/*        width: 100%;*/
+/*        height: 100%;*/
+/*        padding-top: 20%;*/
+/*        padding-left: 10%;*/
+/*    }*/
+/*    #head-link-hambeger:hover>div{*/
+/*        background-color: red;*/
+/*    }*/
+
+/*    #head-link-hambeger > div {*/
+/*        width: 50px;*/
+/*        height: 8px;*/
+/*        background-color: black;*/
+/*        margin: 6px 0;*/
+/*    }*/
+
+/*    #product-tab{*/
+/*        width: 100%;*/
+/*        position: relative;*/
+/*    }*/
+/*    #produc-list {*/
+/*        position: absolute;*/
+/*        width: 50%;*/
+/*        right: 0;*/
+/*        top: 0;*/
+/*        visibility: hidden;*/
+/*    }*/
+/*    #product-tab:hover #produc-list {*/
+/*        visibility: visible;*/
+/*    }*/
+/*}*/

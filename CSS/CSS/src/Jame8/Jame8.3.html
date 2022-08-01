@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .resize{
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .reponsive{
+        margin-right: 6px;
+        border: 1px solid black;
+        width: 24%;
+        float: left;
+        margin-bottom: 10px;
+    }
+    @media only screen and (max-width: 700px) and (min-width: 501px) {
+        .reponsive{
+            width: 48%;
+            margin-right: 6px;
+            float: left;
+            margin-bottom: 10px;
+        }
+    }
+    @media only screen and (max-width: 500px) {
+        .reponsive{
+            width: 100%;
+        }
+    }
+    .text{
+        font-size: 20px;
+        margin-top: 5px;
+    }
+</style>
+<body>
+<div>
+    <div>
+        <h2>Reponsive Image Gallery</h2>
+        <h4>Resize the browser window to se the effect</h4>
+    </div>
+    <div class="resize">
+        <div class="reponsive">
+            <img src="https://demo.codegym.vn/web/15/gallery/img_forest.jpg" alt="picture1" width="100%">
+            <span><br>Add a description of the image here</span>
+        </div>
+        <div class="reponsive">
+            <img src="https://demo.codegym.vn/web/15/gallery/img_fjords.jpg" alt="picture1" width="100%">
+            <span><br>Add a description of the image here</span>
+        </div>
+        <div class="reponsive">
+            <img src="https://demo.codegym.vn/web/15/gallery/img_lights.jpg" alt="picture1" width="100%">
+            <span><br>Add a description of the image here</span>
+        </div>
+        <div class="reponsive">
+            <img src="https://demo.codegym.vn/web/15/gallery/img_mountains.jpg" alt="picture1" width="100%">
+            <spa><br>Add a description of the image here</spa>
+        </div>
+    </div>
+    <div class="text">
+        <p>
+            This example use media queries to re-arrange the images on
+            different screen sizes: for screens larger than 700px wide,
+            it will show four images side by side, for screens smaller than 700px,
+            it will show two images side by side. For screens smaller than 500px,
+            the images will stack vertically (100%).
+        </p>
+    </div>
+</div>
+</body>
+</html>
