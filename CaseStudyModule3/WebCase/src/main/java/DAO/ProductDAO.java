@@ -16,8 +16,9 @@ public class ProductDAO implements IProductDAO {
             "(productName, productDescription, price, quaility, typeID) VALUES" + "(?,?,?,?,?);";
     private static final String SELECT_ALL_PRODUCT = "SELECT * from product";
     private static final String SELECT_ALL_PRODUCT_INNER_JOIN= "select p.productID, p.productName, p.productDescription, p.price, p.quaility, t.typeName, t.typeID\n" +
-            " from product as p inner join typeproduct as t where p.typeID = t.typeID";
+            " from product as p inner join typeproduct as t where p.typeID = t.typeID order by p.productID";
     private static final String SELECT_PRODUCT_SQL = "SELECT productName, productDescription, price, quaility from product where productID = ?;";
+    private static final String SELECT_PRODUCT_BY_PRICE = "SELECT productName, productDescription, price, quaility from product where productName = ? and price = ?;";
     private static final String DELETE_PRODUCT_SQL = "delete from product where productID = ?;";
     private static final String UPDATE_QUAILITY = "update product set quaility =? where productID=?";
     private static final String UPDATE_PRICE = "update product set price =? where productID=?";
@@ -94,6 +95,14 @@ public class ProductDAO implements IProductDAO {
             printSQLException(e);
         }
         return listProduct;
+    }
+    public boolean selectProductByPrice(String productName, double price, int type){
+        for (Product product : selectAllProduct()){
+            if (product.getProductName().equals(productName)&&product.getPrice()==price&&product.getTypeID()==product.getTypeID()){
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

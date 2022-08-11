@@ -13,13 +13,9 @@
 </head>
 <body>
 <h1>Product User</h1>
-<h2>
-    <%--    <a href="product?action=users">List All Product</a>--%>
-</h2>
 <div>
     <form method="post">
         <table border="1" cellpadding="5">
-            <caption><h2>Edit Product</h2></caption>
             <tr>
                 <td style="display: none">
                     <input type="text" name="productID" id="productID" size="45" value="${product.getProductID()}"/>
@@ -64,9 +60,22 @@
             </tr>
         </table>
     </form>
-</div>
-<div>
-    ${errors}
+    <div class="text-danger mt-2 w-100">
+        <c:if test="${requestScope.errors!=null}">
+            <div class="alert alert-icon alert-danger alert-dismissible fade show mb-0" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h3 class="text-center">Warning</h3>
+                <c:forEach items="${errors}" var="String">
+                    <ul><h5>${(String.key).toUpperCase()}</h5></ul>
+                    <c:forEach items="${String.value}" var="message">
+                        <li>${message}</li>
+                    </c:forEach>
+                </c:forEach>
+            </div>
+        </c:if>
+    </div>
 </div>
 </body>
 </html>

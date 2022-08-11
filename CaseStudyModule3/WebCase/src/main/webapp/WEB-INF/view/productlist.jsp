@@ -7,10 +7,10 @@
     <%--    <meta charset="UTF-8">--%>
     <title>Product Management</title>
     <jsp:include page="/WEB-INF/layout/head-meta.jsp"></jsp:include>
-    <link href="/assets/libs/toastr/toastr.min.css" rel="stylesheet" type="text/css">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-<body data-layout="horizontal">
+<body>
 
 <!-- Begin page -->
 <div id="wrapper">
@@ -18,50 +18,83 @@
     <!-- Navigation Bar-->
     <jsp:include page="/WEB-INF/layout/top-nav.jsp"></jsp:include>
     <!-- End Navigation Bar-->
-    <div class="content-page w-100">
-        <div class="row w-100 text-center">
-            <h2 class="w-100 text-center">Products List</h2>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="card-box table-responsive">
-                    <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap"
-                           style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                        <thead>
-                        <tr>
-                            <th>Product ID</th>
-                            <th>Product Name</th>
-                            <th>Product Description</th>
-                            <th>Price</th>
-                            <th>Quaility</th>
-                            <th>Type</th>
-                            <th>Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach var="product" items="${listProduct}">
-                            <tr>
-                                <td><c:out value="${product.productID}"/></td>
-                                <td><c:out value="${product.productName}"/></td>
-                                <td><c:out value="${product.productDescription}"/></td>
-                                <td><c:out value="${product.price}"/></td>
-                                <td><c:out value="${product.quaility}"/></td>
-                                    <%--                        <td style="display:none;"><c:out value="${product.typeID}"/></td>--%>
-                                <td><c:out value="${product.typeName}"/></td>
-                                <td>
-                                    <div><a href="/product?action=update&productID=${product.productID}">Edit</a></div>
-                                    <div><a href="/product?action=delete&productID=${product.productID}">Delete</a>
-                                    </div>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
+    <div class="content-page">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card-box">
+                            <table class="table table-striped nowrap"
+                                   style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                <tr class="w-100"><h3 class="w-100 text-center text-white m-3">Product List</h3></tr>
+                                <thead>
+                                <tr class="bg-primary text-white">
+                                    <th>Product ID</th>
+                                    <th>Product Name</th>
+                                    <th>Product Description</th>
+                                    <th>Price</th>
+                                    <th>Quaility</th>
+                                    <th>Type</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach var="product" items="${listProduct}">
+                                    <tr>
+                                        <td><c:out value="${product.productID}"/></td>
+                                        <td><c:out value="${product.productName}"/></td>
+                                        <td><c:out value="${product.productDescription}"/></td>
+                                        <td><c:out value="${product.price}"/></td>
+                                        <td><c:out value="${product.quaility}"/></td>
+                                            <%--                        <td style="display:none;"><c:out value="${product.typeID}"/></td>--%>
+                                        <td><c:out value="${product.typeName}"/></td>
+                                        <td>
+                                            <a href="/product?action=update&productID=${product.productID}"
+                                               class="w-45 float-left">
+                                                <i class="la la-gear"></i>
+                                                <span>Edit</span>
+                                            </a>
+                                            <a href="/product?action=delete&productID=${product.productID}"
+                                               class="float-right w-45">
+                                                <i class="la la-trash"></i>
+                                                <span>Delete</span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="container-fluid mt-2">
+                            <div class="float-right">
+                                <c:if test="${currentPage!=1}">
+                                    <a href="product?page=${currentPage-1}" class="p-2 mr-1 border">Previous</a>
+                                </c:if>
+                                <c:forEach begin="1" end="${noOfPage}" var="i">
+                                    <c:choose>
+                                        <c:when test="${currentPage eq 1}">
+                                            <a href="product?page=${i}" class="p-2 mr-1 border">${i}</a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a href="product?page=${i}" class="p-2 mr-1 border">${i}</a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                                <c:if test="${currentPage<noOfPage}">
+                                    <a href="product?page=${currentPage+1}" class="p-2 mr-1 border">Next</a>
+                                </c:if>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    </div>
+<!-- form comfirm-->
+<!--end form comfirm-->
 <!-- END wrapper -->
 <jsp:include page="/WEB-INF/layout/footer-js.jsp"></jsp:include>
 <!-- Code injected by live-server -->

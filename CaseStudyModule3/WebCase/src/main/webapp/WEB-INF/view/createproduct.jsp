@@ -1,69 +1,83 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: Admin
-  Date: 07/08/2022
-  Time: 12:44 CH
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Product Management</title>
+    <jsp:include page="/WEB-INF/layout/head-meta.jsp"></jsp:include>
 </head>
-<body>
-<h1>Create Product</h1>
-<h2>
-    <a href="product?action=users">List All Product</a>
-</h2>
-<div>
-    <form method="post">
-        <table border="1" cellpadding="5">
-            <caption><h2>Add new Product</h2></caption>
-            <tr>
-                <th>product Name: </th>
-                <td>
-                    <input type="text" name="productName" id="productName" size="45" value="${product.getProductName()}"/>
-                </td>
-            </tr>
-            <tr>
-                <th>Product Description: </th>
-                <td>
-                    <input type="text" name="productDescription" id="productDescription" size="45" value="${product.getProductDescription()}"/>
-                </td>
-            </tr>
-            <tr>
-                <th>Price: </th>
-                <td>
-                    <input type="text" name="price" id="price" size="45" value="${product.getPrice()}"/>
-                </td>
-            </tr>
-            <tr>
-                <th>Quaility:</th>
-                <td>
-                    <input type="number" name="quaility" id="quaility" size="45" value="${product.getQuaility()}"/>
-                </td>
-            </tr>
-            <tr>
-                <th>Type:</th>
-                <td>
-                    <select name="typeID">
-                        <c:forEach items="${applicationScope.listType}" var="type">
-                            <option value="${type.getTypeID()}">${type.getTypeName()}</option>
-                        </c:forEach>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" align="center">
-                    <input type="submit" value="save">
-                </td>
-            </tr>
-        </table>
-    </form>
-</div>
-<div class="text-danger">
-    ${errors}
-</div>
+<body  data-layout="horizontal">
+    <div id="wrapper">
+        <jsp:include page="/WEB-INF/layout/top-nav.jsp"></jsp:include>
+        <div class="content-page">
+            <div class="content">
+                <!-- Start Content-->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div><h3 class="w-100 text-center m-2"> Create Product</h3></div>
+                        <div class="col-lg-12">
+                            <form method="post">
+                                <div class="form-group">
+                                    <label>product Name: </label>
+                                    <input type="text" class="form-control" name="productName" id="productName" size="45" value="${product.getProductName()}"/>
+                                </div>
+                                <div class="form-group">
+                                    <label >Description: </label>
+                                    <input type="text" class="form-control" name="productDescription" id="productDescription" size="45" value="${product.getProductDescription()}"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Price: </label>
+                                    <input type="text" class="form-control" name="price" id="price" size="45" value="${product.getPrice()}"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Quaility: </label>
+                                    <input type="number" class="form-control" name="quaility" id="quaility" size="45" value="${product.getQuaility()}"/>
+                                </div>
+                                <div class="form-group">
+                                    <label >Type of product: </label>
+                                    <select name="typeID">
+                                        <c:forEach items="${applicationScope.listType}" var="type">
+                                        <option value="${type.getTypeID()}">${type.getTypeName()}</option>
+                                        </c:forEach>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Submit" class="form-control w-25 bg-primary text-white">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="text-danger mt-2 w-100">
+                            <c:if test="${requestScope.errors!=null}">
+                                <div class="alert alert-icon alert-danger alert-dismissible fade show mb-0" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                    <h3 class="text-center">Warning</h3>
+                                    <c:forEach items="${errors}" var="String">
+                                        <ul><h5>${(String.key).toUpperCase()}</h5></ul>
+                                        <c:forEach items="${String.value}" var="message">
+                                            <li>${message}</li>
+                                        </c:forEach>
+                                    </c:forEach>
+                                </div>
+                            </c:if>
+                            <c:if test="${errorsprice!=null}">
+                                <div class="alert alert-icon alert-danger alert-dismissible fade show mb-0" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                    <ul>
+                                        <li>${errorsprice}</li>
+                                    </ul>
+                                </div>
+                            </c:if>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<jsp:include page="/WEB-INF/layout/footer-js.jsp"></jsp:include>
 </body>
 </html>

@@ -1,6 +1,6 @@
-/*! Tablesaw - v3.1.2 - 2019-03-19
+/*! Tablesaw - v3.1.0 - 2018-12-10
 * https://github.com/filamentgroup/tablesaw
-* Copyright (c) 2019 Filament Group; Licensed MIT */
+* Copyright (c) 2018 Filament Group; Licensed MIT */
 /*! Shoestring - v2.0.0 - 2017-02-14
 * http://github.com/filamentgroup/shoestring/
 * Copyright (c) 2017 Scott Jehl, Filament Group, Inc; Licensed MIT & GPLv2 */ 
@@ -3159,7 +3159,6 @@ if (Tablesaw.mustard) {
 		var $headerCells = tbl._getPrimaryHeaderCells();
 		var $headerCellsNoPersist = $headerCells.not('[data-tablesaw-priority="persist"]');
 		var headerWidths = [];
-		var headerWidthsNoPersist = [];
 		var $head = $(document.head || "head");
 		var tableId = $table.attr("id");
 
@@ -3178,14 +3177,9 @@ if (Tablesaw.mustard) {
 			$table.find("." + classes.hiddenCol).removeClass(classes.hiddenCol);
 
 			headerWidths = [];
-			headerWidthsNoPersist = [];
 			// Calculate initial widths
 			$headerCells.each(function() {
-				var width = this.offsetWidth;
-				headerWidths.push(width);
-				if (!isPersistent(this)) {
-					headerWidthsNoPersist.push(width);
-				}
+				headerWidths.push(this.offsetWidth);
 			});
 
 			// reset props
@@ -3225,19 +3219,17 @@ if (Tablesaw.mustard) {
 		}
 
 		function maintainWidths() {
-			var prefix = "#" + tableId + ".tablesaw-swipe ";
-			var styles = [];
-			var tableWidth = $table.width();
-			var tableWidthNoPersistantColumns = tableWidth;
-			var hash = [];
-			var newHash;
+			var prefix = "#" + tableId + ".tablesaw-swipe ",
+				styles = [],
+				tableWidth = $table.width(),
+				hash = [],
+				newHash;
 
 			// save persistent column widths (as long as they take up less than 75% of table width)
 			$headerCells.each(function(index) {
 				var width;
 				if (isPersistent(this)) {
 					width = this.offsetWidth;
-					tableWidthNoPersistantColumns -= width;
 
 					if (width < tableWidth * 0.75) {
 						hash.push(index + "-" + width);
@@ -3270,16 +3262,15 @@ if (Tablesaw.mustard) {
 						.appendTo($head);
 				}
 			}
-
-			return tableWidthNoPersistantColumns;
 		}
 
 		function getNext() {
-			var next = [];
-			var checkFound;
+			var next = [],
+				checkFound;
+
 			$headerCellsNoPersist.each(function(i) {
-				var $t = $(this);
-				var isHidden = $t.css("display") === "none" || $t.is("." + classes.hiddenCol);
+				var $t = $(this),
+					isHidden = $t.css("display") === "none" || $t.is("." + classes.hiddenCol);
 
 				if (!isHidden && !checkFound) {
 					checkFound = true;
@@ -3299,7 +3290,11 @@ if (Tablesaw.mustard) {
 			return [next[1] - 1, next[0] - 1];
 		}
 
-		function canNavigate(pair) {
+		function nextpair(fwd) {
+			return fwd ? getNext() : getPrev();
+		}
+
+		function canAdvance(pair) {
 			return pair[1] > -1 && pair[1] < $headerCellsNoPersist.length;
 		}
 
@@ -3342,16 +3337,10 @@ if (Tablesaw.mustard) {
 				}
 			});
 
-			var firstPersist = true;
 			$headerCells.each(function(index) {
 				if (persist[index]) {
 					// for visual box-shadow
 					persistColumn(this);
-
-					if (firstPersist) {
-						tblsaw._$getCells(this).css("width", sums[index] + "px");
-						firstPersist = false;
-					}
 					return;
 				}
 
@@ -3367,89 +3356,32 @@ if (Tablesaw.mustard) {
 			$table.trigger("tablesawcolumns");
 		}
 
-		function goForward() {
-			navigate(true);
-		}
-		function goBackward() {
-			navigate(false);
-		}
-
-		function navigate(isNavigateForward) {
-			var pair;
-			if (isNavigateForward) {
-				pair = getNext();
-			} else {
-				pair = getPrev();
-			}
-
-			if (canNavigate(pair)) {
+		function advance(fwd) {
+			var pair = nextpair(fwd);
+			if (canAdvance(pair)) {
 				if (isNaN(pair[0])) {
-					if (isNavigateForward) {
+					if (fwd) {
 						pair[0] = 0;
 					} else {
 						pair[0] = $headerCellsNoPersist.length - 1;
 					}
 				}
 
-				var roomForColumnsWidth = maintainWidths();
-				var hideColumnIndex = pair[0];
-				var showColumnIndex = pair[1];
+				// TODO just blindly hiding the previous column and showing the next column can result in
+				// column content overflow
+				maintainWidths();
+				hideColumn($headerCellsNoPersist.get(pair[0]));
+				tblsaw.updateColspanCells(classes.hiddenCol, $headerCellsNoPersist.get(pair[0]), false);
 
-				// Hide one column, show one or more based on how much space was freed up
-				var columnToShow;
-				var columnToHide = $headerCellsNoPersist.get(hideColumnIndex);
-				var wasAtLeastOneColumnShown = false;
-				var atLeastOneColumnIsVisible = false;
+				showColumn($headerCellsNoPersist.get(pair[1]));
+				tblsaw.updateColspanCells(classes.hiddenCol, $headerCellsNoPersist.get(pair[1]), true);
 
-				hideColumn(columnToHide);
-				tblsaw.updateColspanCells(classes.hiddenCol, columnToHide, true);
-
-				var columnIndex = hideColumnIndex + (isNavigateForward ? 1 : -1);
-				while (columnIndex >= 0 && columnIndex < headerWidthsNoPersist.length) {
-					roomForColumnsWidth -= headerWidthsNoPersist[columnIndex];
-
-					var $columnToShow = $headerCellsNoPersist.eq(columnIndex);
-					if ($columnToShow.is(".tablesaw-swipe-cellhidden")) {
-						if (roomForColumnsWidth > 0) {
-							columnToShow = $columnToShow.get(0);
-							wasAtLeastOneColumnShown = true;
-							atLeastOneColumnIsVisible = true;
-							showColumn(columnToShow);
-							tblsaw.updateColspanCells(classes.hiddenCol, columnToShow, false);
-						}
-					} else {
-						atLeastOneColumnIsVisible = true;
-					}
-
-					if (isNavigateForward) {
-						columnIndex++;
-					} else {
-						columnIndex--;
-					}
-				}
-
-				if (!atLeastOneColumnIsVisible) {
-					// if no columns are showing, at least show the first one we were aiming for.
-					columnToShow = $headerCellsNoPersist.get(showColumnIndex);
-					showColumn(columnToShow);
-					tblsaw.updateColspanCells(classes.hiddenCol, columnToShow, false);
-				} else if (
-					!wasAtLeastOneColumnShown &&
-					canNavigate(isNavigateForward ? getNext() : getPrev())
-				) {
-					// if our one new column was hidden but no new columns were shown, let’s navigate again automatically.
-					navigate(isNavigateForward);
-				}
 				$table.trigger("tablesawcolumns");
 			}
 		}
 
 		$prevBtn.add($nextBtn).on("click", function(e) {
-			if (!!$(e.target).closest($nextBtn).length) {
-				goForward();
-			} else {
-				goBackward();
-			}
+			advance(!!$(e.target).closest($nextBtn).length);
 			e.preventDefault();
 		});
 
@@ -3494,10 +3426,10 @@ if (Tablesaw.mustard) {
 
 						if (!isVerticalSwipe && !isPageScrolled) {
 							if (x - originX < -1 * horizontalThreshold) {
-								goForward();
+								advance(true);
 							}
 							if (x - originX > horizontalThreshold) {
-								goBackward();
+								advance(false);
 							}
 						}
 
@@ -3512,8 +3444,8 @@ if (Tablesaw.mustard) {
 
 		$table
 			.on("tablesawcolumns.swipetoggle", function() {
-				var canGoPrev = canNavigate(getPrev());
-				var canGoNext = canNavigate(getNext());
+				var canGoPrev = canAdvance(getPrev());
+				var canGoNext = canAdvance(getNext());
 				$prevBtn[canGoPrev ? "removeClass" : "addClass"](classes.hideBtn);
 				$nextBtn[canGoNext ? "removeClass" : "addClass"](classes.hideBtn);
 
@@ -3522,10 +3454,10 @@ if (Tablesaw.mustard) {
 				);
 			})
 			.on("tablesawnext.swipetoggle", function() {
-				goForward();
+				advance(true);
 			})
 			.on("tablesawprev.swipetoggle", function() {
-				goBackward();
+				advance(false);
 			})
 			.on(Tablesaw.events.destroy + ".swipetoggle", function() {
 				var $t = $(this);

@@ -51,7 +51,7 @@ public class ProductServlet extends HttpServlet {
                     deleteProduct(req, resp);
                     break;
                 default:
-                    listProduct(req, resp);
+                    listProductPagging(req, resp);
             }
         } catch (SQLException ex) {
             throw new ServletException(ex);
@@ -73,7 +73,7 @@ public class ProductServlet extends HttpServlet {
                     updateProduct(req, resp);
                     break;
                 default:
-                    listProduct(req, resp);
+                    listProductPagging(req, resp);
             }
         } catch (SQLException ex) {
             throw new ServletException(ex);
@@ -83,12 +83,12 @@ public class ProductServlet extends HttpServlet {
     private void listProductPagging(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int page = 1;
         int recordsPerPage = 5;
-        if (request.getParameter("page")!=null){
+        if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
         }
-        List<Product> listProduct = productDAO.selectProductPagging((page-1)*recordsPerPage,recordsPerPage);
+        List<Product> listProduct = productDAO.selectProductPagging((page - 1) * recordsPerPage, recordsPerPage);
         int noOfRecord = productDAO.getNoOfRecord();
-        int noOfPage = (int)Math.ceil(noOfRecord*1.15)/recordsPerPage;
+        int noOfPage = (int) Math.ceil(noOfRecord * 1.08) / recordsPerPage;
         request.setAttribute("listProduct", listProduct);
         request.setAttribute("noOfPage", noOfPage);
         request.setAttribute("currentPage", page);
@@ -103,56 +103,58 @@ public class ProductServlet extends HttpServlet {
         requestDispatcher.forward(request, response);
     }
 
-    private void inserProduct(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
-//        String productName = request.getParameter("productName");
-//        String productDescription = request.getParameter("productDescription");
-//        double price = Double.parseDouble(request.getParameter("price"));
-//        int quaility = Integer.parseInt(request.getParameter("quaility"));
-//        Product product = new Product(productName, productDescription, price, quaility);
-//        productDAO.insertProduct(product);
-//        response.sendRedirect("product");
-        Product product = new Product();
-        boolean flag = true;
-        Map<String, String> hashmap = new HashMap<String, String>();
-        try {
-            String productName = request.getParameter("productName");
-            String productDescription = request.getParameter("productDescription");
-            double price = Double.parseDouble(request.getParameter("price"));
-            int quaility = Integer.parseInt(request.getParameter("quaility"));
-            int typeID = Integer.parseInt(request.getParameter("typeID"));
-            product = new Product(productName, productDescription, price, quaility, typeID);
-            ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
-            Validator validator = validatorFactory.getValidator();
-            Set<ConstraintViolation<Product>> constraintViolations = validator.validate(product);
-            if (!constraintViolations.isEmpty()) {
-                errors = "<ul>";
-                for (ConstraintViolation<Product> constraintViolation : constraintViolations) {
-                    errors += "<li class='text-danger'>" + constraintViolation.getPropertyPath() + " " + constraintViolation.getMessage() +
-                            "</li>";
-                }
-                errors += "</ul>";
-                request.setAttribute("product", product);
-                request.setAttribute("errors", errors);
-                request.getRequestDispatcher("WEB-INF/view/createproduct.jsp").forward(request, response);
-            } else {
-                productDAO.insertProduct(product);
-                request.setAttribute("success", "Insert product is success.");
-                request.getRequestDispatcher("/product?action=list").forward(request,response);
-            }
-        } catch (NumberFormatException e) {
-            errors = "<ul>";
-            errors += "<li>" + "input format is wrong, price is a number" +
-                    "</li>" +
-                    "</ul>";
-            request.setAttribute("product", product);
-            request.setAttribute("errors", errors);
-            request.getRequestDispatcher("WEB-INF/view/createproduct.jsp").forward(request, response);
-        }
+    private void inserProduct(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException, NumberFormatException {
+           String productName = request.getParameter("productName");
+           String productDescription = request.getParameter("productDescription");
+          double price=0;
+           if (request.getParameter("price")!=""){
+               String input = request.getParameter("price");
+               try
+               {
+                   Integer.parseInt(input);
+                   price= Double.parseDouble(request.getParameter("price"));
+               }
+               catch (NumberFormatException e)
+               {
+                   price = 0;
+               }
+           }
+        int quaility = 0;
+           if (request.getParameter("quaility")!=""){
+               quaility = Integer.parseInt(request.getParameter("quaility"));
+           }
+           int typeID = Integer.parseInt(request.getParameter("typeID"));
+           Product product =new Product(productName,productDescription,price,quaility,typeID);
+           ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
+           Validator validator = validatorFactory.getValidator();
+           Set<ConstraintViolation<Product>> constraintViolations = validator.validate(product);
+           if (!constraintViolations.isEmpty()){
+               request.setAttribute("errors", getErrorFromContraint(constraintViolations));
+               request.setAttribute("product", product);
+               RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/view/createproduct.jsp");
+               requestDispatcher.forward(request, response);
+           }else{
+               if (productDAO.selectProductByPrice(productName,price,typeID)){
+                   String errorsprice="<ul>" +
+                           "<li>Product already exist</li>" +
+                           "<li> 1 Product can't have the same name,price and type</li>" +
+                           "</ul>";
+                   request.setAttribute("errorsprice", errorsprice);
+                   request.setAttribute("product", product);
+                   RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/view/createproduct.jsp");
+                   requestDispatcher.forward(request, response);
+               }else {
+                   productDAO.insertProduct(product);
+                   request.setAttribute("success", "Insert product is success.");
+                   request.getRequestDispatcher("/product?action=list").forward(request, response);
+               }
+           }
     }
 
     private void deleteProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("productID"));
-        productDAO.deleteProductByID(id);
+//        productDAO.deleteProductByID(id);
+        request.setAttribute("delete","you wan't delete");
         RequestDispatcher dispatcher = request.getRequestDispatcher("product?action=users");
         dispatcher.forward(request, response);
     }
@@ -167,14 +169,42 @@ public class ProductServlet extends HttpServlet {
         int productID = Integer.parseInt(request.getParameter("productID"));
         String productName = request.getParameter("productName");
         String productDescription = request.getParameter("productDescription");
-        double price = Double.parseDouble(request.getParameter("price"));
-        int quaility = Integer.parseInt(request.getParameter("quaility"));
+        double price=0;
+        if (request.getParameter("price")!=""){
+            String input = request.getParameter("price");
+            try
+            {
+                Integer.parseInt(input);
+                price= Double.parseDouble(request.getParameter("price"));
+            }
+            catch (NumberFormatException e)
+            {
+                price = 0;
+            }
+        }
+        int quaility = 0;
+        if (request.getParameter("quaility")!=""){
+            quaility = Integer.parseInt(request.getParameter("quaility"));
+        }
         int typeID = Integer.parseInt(request.getParameter("typeID"));
         Product product = new Product(productID, productName, productDescription, price, quaility, typeID);
-        System.out.println(productID + " " + productName + " " + productDescription + " " + price + " " + quaility);
-        productDAO.updateProductByID(product);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("product?action=users");
-        requestDispatcher.forward(request, response);
+//        System.out.println(productID + " " + productName + " " + productDescription + " " + price + " " + quaility);
+//        productDAO.updateProductByID(product);
+//        RequestDispatcher requestDispatcher = request.getRequestDispatcher("product?action=users");
+//        requestDispatcher.forward(request, response);
+        ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
+        Validator validator = validatorFactory.getValidator();
+        Set<ConstraintViolation<Product>> constraintViolations = validator.validate(product);
+        if (!constraintViolations.isEmpty()){
+            request.setAttribute("errors", getErrorFromContraint(constraintViolations));
+            request.setAttribute("product", product);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/view/createproduct.jsp");
+            requestDispatcher.forward(request, response);
+        }else{
+            productDAO.updateProductByID(product);
+            request.setAttribute("success", "Insert product is success.");
+            request.getRequestDispatcher("/product?action=list").forward(request, response);
+        }
     }
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
@@ -189,5 +219,18 @@ public class ProductServlet extends HttpServlet {
         //getServletContext().setAttribute("listType",typeDAO.selectAllType() );
         dispatcher.forward(request, response);
 
+    }
+    private HashMap<String, List<String>> getErrorFromContraint(Set<ConstraintViolation<Product>> constraintViolations) {
+        HashMap<String, List<String>> hashMap = new HashMap<>();
+        for(ConstraintViolation<Product> c : constraintViolations){
+            if(hashMap.keySet().contains(c.getPropertyPath().toString())){
+                hashMap.get(c.getPropertyPath().toString()).add(c.getMessage());
+            }else{
+                List<String> listMessages = new ArrayList<>();
+                listMessages.add(c.getMessage());
+                hashMap.put(c.getPropertyPath().toString(), listMessages);
+            }
+        }
+        return hashMap;
     }
 }

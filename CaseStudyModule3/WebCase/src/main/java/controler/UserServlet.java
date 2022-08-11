@@ -1,59 +1,64 @@
 package controler;
 
-import DAO.IUserDao;
-import DAO.UserDao;
+import DAO.*;
+import Model.Account;
+import Model.Country;
 import Model.Product;
 import Model.User;
+import com.mysql.cj.Session;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @WebServlet(name = "UserServlet", urlPatterns = "/users")
 public class UserServlet extends HttpServlet {
     private String errors;
     private IUserDao userDao;
-
+    private IProductDAO productDAO;
+    private ICountryDAO countryDAO;
     @Override
     public void init() throws ServletException {
+        productDAO = new ProductDAO();
+        countryDAO = new CountryDAO();
         userDao = new UserDao();
+        if (this.getServletContext().getAttribute("countryList")==null){
+            this.getServletContext().setAttribute("countryList", countryDAO.selectAllCountry());
+        }
     }
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
         if (action==null){
-            action="";
+            action ="";
         }
-        try {
-            switch (action) {
-                case "create":
-                    showNewFormUser(req, resp);
-                    break;
-                case "edit":
-                    showEditUserForm(req, resp);
-                    break;
-                case "delete":
-                    deleteUser(req, resp);
-                    break;
-                default:
-//                    resp.sendRedirect("view/listuser.jsp");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        if (!checkLogin(req,resp)){
+            System.out.println("begin");
+            resp.sendRedirect("/loginpage.jsp");
+        }
+        switch (action){
+            case "login":
+                loginUser(req,resp);
+                break;
+            case "create":
+                formRegister(req,resp);
+                break;
+            case "changepassword":
+                formChangepassword(req,resp);
+                break;
+            case "list":
+                System.out.println("hello");
+                break;
+            default:
+                resp.sendRedirect("/product");
         }
     }
 
@@ -61,92 +66,158 @@ public class UserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
         if (action==null){
-            action="";
+            action ="";
         }
         switch (action){
+            case "login":
+                loginUser(req,resp);
+                break;
             case "create":
                 insertUser(req,resp);
                 break;
-            case "edit":
+            case "changepassword":
+                break;
+            case "logout":
+                logOut(req,resp);
                 break;
             default:
-                RequestDispatcher requestDispatcher = req.getRequestDispatcher("/product");
-                requestDispatcher.forward(req,resp);
         }
     }
-    private void showNewFormUser(HttpServletRequest request, HttpServletResponse response)
+    private void formChangepassword(HttpServletRequest req, HttpServletResponse resp) {
+        String password =null;
+        String userName =null;
+        for (Cookie cookie : req.getCookies()){
+            if (cookie.getName().equals("password")){
+                password = cookie.getValue();
+            }
+            if (cookie.getName().equals("userName")){
+                userName = cookie.getValue();
+            }
+        }
+        req.setAttribute("password", password);
+        req.setAttribute("userName", userName);
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/usermanager.jsp");
+    }
+    private void changePassword(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
+        String password =null;
+        String userName =null;
+        String newPW =null;
+        String oldPW =null;
+        for (Cookie cookie : req.getCookies()){
+            if (cookie.getName().equals("userName")){
+                userName = cookie.getValue();
+            }
+            if (cookie.getName().equals("password")){
+                password = cookie.getValue();
+            }
+        }
+        newPW = req.getParameter("newPW");
+        oldPW = req.getParameter("PW");
+        if (!(password.equals(oldPW))){
+            errors="<ul><li>Current password is incorrect </li></ul>";
+            req.setAttribute("errorspw", errors);
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("WEB-INF/view/usermanager.jsp");
+            requestDispatcher.forward(req, resp);
+            return;
+        }
+        User user = null;
+        for (User user1: userDao.selectAllUsers()){
+            if (user1.getUserName().equals(userName)){
+                user =user1;
+                break;
+            }
+        }
+        ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
+        Validator validator = validatorFactory.getValidator();
+        Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
+        if (!constraintViolations.isEmpty()){
+            req.setAttribute("errors", getErrorFromContraint(constraintViolations));
+            req.setAttribute("user", user);
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("WEB-INF/view/usermanager.jsp");
+            requestDispatcher.forward(req, resp);
+        }else {
+            userDao.updateUserPassword(userName,newPW);
+            req.setAttribute("success", "Insert product is success.");
+            req.getRequestDispatcher("/users?action=login");
+        }
+    }
+    private void loginUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        String username = req.getParameter("userName");
+        String pw = req.getParameter("password");
+        if (userDao.login(username,pw)!=null){
+            Cookie cookie = new Cookie("userName",username);
+            Cookie cookie2 = new Cookie("password",pw);
+            resp.addCookie(cookie);
+            resp.addCookie(cookie2);
+            resp.sendRedirect("/product");
+        }else {
+            resp.sendRedirect("loginpage.jsp");
+        }
+    }
+    private void formRegister(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("view/createuser.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/register.jsp");
         dispatcher.forward(request, response);
     }
-    private void showEditUserForm(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("user"));
-        User user = userDao.selectUserByID(id);
-        request.setAttribute("user", user);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("view/edituser.jsp");
-        dispatcher.forward(request, response);
-    }
-//    private void editUser(HttpServletRequest request, HttpServletResponse response)
-//            throws ServletException, IOException {
-//        RequestDispatcher dispatcher = request.getRequestDispatcher("view/editproduct.jsp");
-//        dispatcher.forward(request, response);
-//    }
-    private void updateUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("userID"));
+    public void insertUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userName = request.getParameter("userName");
         String password = request.getParameter("password");
         String fullName = request.getParameter("fullName");
-        String email = request.getParameter("email");
-        int age = Integer.parseInt(request.getParameter("age"));
-        String phone = request.getParameter("phone");
-        String address = request.getParameter("address");
-        userDao.updateUser(new User(id,userName,password,fullName,age,email,phone,address));
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("users?action=list");
-        requestDispatcher.forward(request,response);
-    }
-    private void deleteUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-//        RequestDispatcher requestDispatcher = request.getRequestDispatcher("view/listuser.jsp");
-    }
-    private void insertUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        User user = new User();
-        boolean flag = true;
-        Map<String, String> hashmap = new HashMap<String, String>();
-        int userID = Integer.parseInt(request.getParameter("userID"));
-        try{
-            String userName = request.getParameter("userName");
-            String password = request.getParameter("password");
-            String fullname = request.getParameter("fullName");
-            int age = Integer.parseInt(request.getParameter("age"));
-            String email = request.getParameter("email");
-            String phone = request.getParameter("phone");
-            String address = request.getParameter("address");
-            user = new User(userID,userName, password, fullname, age,email,phone,address);
-            ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
-            Validator validator = validatorFactory.getValidator();
-            Set<ConstraintViolation<User>> constraintViolationSet = validator.validate(user);
-            if (constraintViolationSet.isEmpty()) {
-                errors = "<ul>";
-                for (ConstraintViolation<User> constraintViolation : constraintViolationSet) {
-                    errors += "<li>" + constraintViolation.getPropertyPath() + " " + constraintViolation.getMessage() +
-                            "</li>";
-                }
-                errors += "</ul>";
-                request.setAttribute("user", user);
-                request.setAttribute("errors", errors);
-                request.getRequestDispatcher("view/createuser.jsp").forward(request, response);
-            } else {
-                userDao.insertUser(user);
-                response.sendRedirect("product");
-            }
-        }catch (NumberFormatException ex){
-            errors = "<ul>";
-            errors+= "<li>" +"input format is wrong, price is a number"+
-                    "</li>"+
-                    "</ul>";
-            request.setAttribute("user", user);
-            request.setAttribute("errors", errors);
-//            request.getRequestDispatcher("view/createuser.jsp").forward(request,response);
+        int age = 0;
+        if (request.getParameter("age")!=""){
+            age = Integer.parseInt(request.getParameter("age"));
         }
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+        int country = Integer.parseInt(request.getParameter("country"));
+        User user = new User(userName,password,fullName,age,email,phone,country);
+        ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
+        Validator validator = validatorFactory.getValidator();
+        Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
+        if (!constraintViolations.isEmpty()){
+            request.setAttribute("errors", getErrorFromContraint(constraintViolations));
+            request.setAttribute("user", user);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/register.jsp");
+            requestDispatcher.forward(request, response);
+        }else{
+            userDao.insertUser(user);
+            request.setAttribute("success", "Insert product is success.");
+            request.getRequestDispatcher("/users?action=login");
+        }
+    }
+    public void logOut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        for (Cookie cookie : req.getCookies()){
+            if (cookie.getName().equals("userName")&&cookie.getValue().equals("password")){
+                cookie.setMaxAge(0);
+                return;
+            }
+        }
+        req.getRequestDispatcher("/users?action=login");
+    }
+    private HashMap<String, List<String>> getErrorFromContraint(Set<ConstraintViolation<User>> constraintViolations) {
+        HashMap<String, List<String>> hashMap = new HashMap<>();
+        for(ConstraintViolation<User> c : constraintViolations){
+            if(hashMap.keySet().contains(c.getPropertyPath().toString())){
+                hashMap.get(c.getPropertyPath().toString()).add(c.getMessage());
+            }else{
+                List<String> listMessages = new ArrayList<>();
+                listMessages.add(c.getMessage());
+                hashMap.put(c.getPropertyPath().toString(), listMessages);
+            }
+        }
+        return hashMap;
+    }
+    private boolean checkLogin(HttpServletRequest req, HttpServletResponse resp){
+        String username=null;
+        String password=null;
+        for (Cookie cookie : req.getCookies()){
+            if (cookie.getName().equals("userName")){
+                username = cookie.getValue();
+            }
+            if (cookie.getName().equals("password")){
+                password = cookie.getValue();
+            }
+        }
+        return (userDao.login(username,password)!=null);
     }
 }

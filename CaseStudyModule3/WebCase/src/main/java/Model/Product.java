@@ -102,7 +102,7 @@ public class Product {
     }
 
     @NotEmpty(message = "product description is not empty")
-    @Length(min = 5, max = 100, message ="Leng of description from 5 to 100 character" )
+    @Length(min = 10, max = 1000, message ="Leng of description from 10 to 1000 character" )
     public String getProductDescription() {
         return productDescription;
     }
@@ -111,9 +111,9 @@ public class Product {
         this.productDescription = productDescription;
     }
 
-//    @NotEmpty(message = "price is not empty")
-//    @Min(value = 1000, message = "min price is 1 thounsand VND")
-//    @Max(value = 1000000000, message = "max price is 1 billion VND")
+    @NotNull(message = "Price is not null, please enter price of product")
+    @Min(value = 1, message = "min price is 1 VND, price is a number")
+    @Max(value = 1000000000, message = "max price is 1 billion VND")
     public double getPrice() {
         return price;
     }
@@ -122,7 +122,9 @@ public class Product {
         this.price = price;
     }
 
-//    @NotEmpty(message = "quaility is not empty")
+    @NotNull(message = "Quaility is not null, please enter Quaility of product")
+    @Min(value = 1, message = "min quaility is 1 product.")
+    @Max(value = 10000, message = "max Quaility is 10000 product.")
     public int getQuaility() {
         return quaility;
     }
