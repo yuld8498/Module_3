@@ -43,22 +43,23 @@ public class UserServlet extends HttpServlet {
         if (!checkLogin(req,resp)){
             System.out.println("begin");
             resp.sendRedirect("/loginpage.jsp");
-        }
-        switch (action){
-            case "login":
-                loginUser(req,resp);
-                break;
-            case "create":
-                formRegister(req,resp);
-                break;
-            case "changepassword":
-                formChangepassword(req,resp);
-                break;
-            case "list":
-                System.out.println("hello");
-                break;
-            default:
-                resp.sendRedirect("/product");
+        }else {
+            switch (action){
+                case "login":
+                    loginUser(req,resp);
+                    break;
+                case "create":
+                    formRegister(req,resp);
+                    break;
+                case "changepassword":
+                    formChangepassword(req,resp);
+                    break;
+                case "list":
+                    System.out.println("hello");
+                    break;
+                default:
+                    resp.sendRedirect("/usermanager.jsp");
+            }
         }
     }
 
@@ -76,6 +77,7 @@ public class UserServlet extends HttpServlet {
                 insertUser(req,resp);
                 break;
             case "changepassword":
+                changePassword(req,resp);
                 break;
             case "logout":
                 logOut(req,resp);
@@ -83,7 +85,7 @@ public class UserServlet extends HttpServlet {
             default:
         }
     }
-    private void formChangepassword(HttpServletRequest req, HttpServletResponse resp) {
+    private void formChangepassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String password =null;
         String userName =null;
         for (Cookie cookie : req.getCookies()){
@@ -97,36 +99,39 @@ public class UserServlet extends HttpServlet {
         req.setAttribute("password", password);
         req.setAttribute("userName", userName);
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/usermanager.jsp");
+        requestDispatcher.forward(req,resp);
     }
-    private void changePassword(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
+    private void changePassword(HttpServletRequest req, HttpServletResponse resp) throws  ServletException, IOException {
         String password =null;
         String userName =null;
-        String newPW =null;
-        String oldPW =null;
         for (Cookie cookie : req.getCookies()){
-            if (cookie.getName().equals("userName")){
-                userName = cookie.getValue();
-            }
             if (cookie.getName().equals("password")){
                 password = cookie.getValue();
             }
+            if (cookie.getName().equals("userName")){
+                userName = cookie.getValue();
+            }
         }
-        newPW = req.getParameter("newPW");
-        oldPW = req.getParameter("PW");
-        if (!(password.equals(oldPW))){
+        String inputPW = req.getParameter("password");
+        String newPW =  req.getParameter("newpassword");
+        String newPWreaplay =  req.getParameter("newpasswordreaplay");
+        if (!(password.equals(inputPW))){
             errors="<ul><li>Current password is incorrect </li></ul>";
             req.setAttribute("errorspw", errors);
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("WEB-INF/view/usermanager.jsp");
+            req.setAttribute("password", password);
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/usermanager.jsp");
             requestDispatcher.forward(req, resp);
             return;
         }
-        User user = null;
-        for (User user1: userDao.selectAllUsers()){
-            if (user1.getUserName().equals(userName)){
-                user =user1;
-                break;
-            }
+        if (!(newPWreaplay.equals(newPW))){
+            String errors2="<ul><li>Re-enter password is not correct </li></ul>";
+            req.setAttribute("errorspw2", errors2);
+            req.setAttribute("password", password);
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/usermanager.jsp");
+            requestDispatcher.forward(req, resp);
+            return;
         }
+        User user = userDao.login(userName,password);
         ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
         Validator validator = validatorFactory.getValidator();
         Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
@@ -136,9 +141,16 @@ public class UserServlet extends HttpServlet {
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("WEB-INF/view/usermanager.jsp");
             requestDispatcher.forward(req, resp);
         }else {
-            userDao.updateUserPassword(userName,newPW);
-            req.setAttribute("success", "Insert product is success.");
-            req.getRequestDispatcher("/users?action=login");
+            try {
+                userDao.updateUserPassword(userName,newPW);
+                req.setAttribute("success", "Insert product is success.");
+                req.getRequestDispatcher("/users?action=login");
+            } catch (SQLException e) {
+                errors="<ul><li>Re-enter password is not correct </li></ul>";
+                req.setAttribute("errorspw", errors);
+                RequestDispatcher requestDispatcher = req.getRequestDispatcher("WEB-INF/view/usermanager.jsp");
+                requestDispatcher.forward(req, resp);
+            }
         }
     }
     private void loginUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
@@ -149,7 +161,8 @@ public class UserServlet extends HttpServlet {
             Cookie cookie2 = new Cookie("password",pw);
             resp.addCookie(cookie);
             resp.addCookie(cookie2);
-            resp.sendRedirect("/product");
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/usermanager.jsp");
+            requestDispatcher.forward(req, resp);
         }else {
             resp.sendRedirect("loginpage.jsp");
         }

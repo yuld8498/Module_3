@@ -163,6 +163,51 @@ public class ProductDAO implements IProductDAO {
         }
         return updateProduct;
     }
+
+    public List<Product> selectProductFilter(int TypeID){
+        String query = "select SQL_CALC_FOUND_ROWS p.productID, p.productName, p.productDescription, p.price, p.quaility, t.typeName, t.typeID" +
+                " from product as p inner join typeproduct as t on t.typeID = p.typeID where p.typeID = "+TypeID;
+        System.out.println("hello");
+        List<Product> listProdcut = new ArrayList<>();
+        Product product =null;
+        Connection connection =null;
+        Statement statement =null;
+        try{
+            connection =getConnection();
+            statement= connection.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()){
+                product =new Product();
+                product.setProductID(rs.getInt("productID"));
+                product.setProductName(rs.getString("productName"));
+                product.setProductDescription(rs.getString("productDescription"));
+                product.setPrice(Double.valueOf(rs.getString("price")));
+                product.setQuaility(Integer.parseInt(rs.getString("quaility")));
+                product.setTypeID(rs.getInt("typeID"));
+                product.setTypeName(rs.getString("typeName"));
+                listProdcut.add(product);
+            }
+            rs.close();
+            rs=statement.executeQuery("select found_rows()");
+            if (rs.next()){
+                this.noOfRecord = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            printSQLException(e);
+        }finally {
+            try {
+                if (statement!=null){
+                    statement.close();
+                }
+                if (connection!=null){
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                printSQLException(e);
+            }
+        }
+        return listProdcut;
+    }
     public List<Product> selectProductPagging(int offset, int noOfRecord){
         String query = "select SQL_CALC_FOUND_ROWS p.productID, p.productName, p.productDescription, p.price, p.quaility, t.typeName, t.typeID" +
                 " from product as p inner join typeproduct as t where p.typeID = t.typeID" +

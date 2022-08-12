@@ -26,7 +26,21 @@
                         <div class="card-box">
                             <table class="table table-striped nowrap"
                                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                                <tr class="w-100"><h3 class="w-100 text-center text-white m-3">Product List</h3></tr>
+                                <tr class="w-100">
+                                    <h3 class="text-white m-3">Product List</h3>
+                                    <span class="float-right">
+                                        <form method="post" action="/product?action=filter">
+                                                    <label>Select by Type: </label>
+                                                    <select name="typeID">
+                                                        <option value="-1">ALL</option>
+                                                        <c:forEach items="${applicationScope.listType}" var="type">
+                                                            <option value="${type.getTypeID()}">${type.getTypeName()}</option>
+                                                        </c:forEach>
+                                            </select>
+                                            <input type="submit" value="Submit" class="bg-primary text-white">
+                                        </form>
+                                    </span>
+                                </tr>
                                 <thead>
                                 <tr class="bg-primary text-white">
                                     <th>Product ID</th>
@@ -92,7 +106,7 @@
             </div>
         </div>
     </div>
-    </div>
+</div>
 <!-- form comfirm-->
 <!--end form comfirm-->
 <!-- END wrapper -->

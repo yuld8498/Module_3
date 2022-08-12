@@ -2,29 +2,18 @@
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="utf-8">
-    <title>User Management</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
-    <meta content="Coderthemes" name="author">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- App favicon -->
-    <link rel="shortcut icon" href="logo.png">
-    <!-- App css -->
-    <link href="assets\css\bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="assets\css\icons.min.css" rel="stylesheet" type="text/css">
-    <link href="assets\css\app.min.css" rel="stylesheet" type="text/css">
+    <%--    <meta charset="UTF-8">--%>
+    <title>Product Management</title>
+    <jsp:include page="/WEB-INF/layout/head-meta.jsp"></jsp:include>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
 
 <body>
-
 <!-- Begin page -->
 <div id="wrapper">
-    <div class="content-page">
+    <jsp:include page="/WEB-INF/layout/top-nav.jsp"></jsp:include>
+    <div class="content-page pt-3">
         <div class="content">
             <!-- Start Content-->
             <div class="container-fluid">
@@ -45,7 +34,7 @@
                                 </p>
                                 <p class="text-muted mb-1 font-13"><strong>Password :</strong> <span
                                         class="ml-2">USA</span>
-                                    <a href="#" class="float-right">change</a>
+                                    <a href="/users?action=changepassword" class="float-right">change</a>
                                 </p>
                                 <p class="text-muted mb-2 font-13"><strong>Mobile :</strong>
                                     <span class="ml-2"> user phone</span>
@@ -64,42 +53,46 @@
 
                     </div> <!-- end col-->
 
-                    <div class="col-lg-8 col-xl-8">
-                        <div class="card-box">
-                            <form action="/users?action=changepassword" class="mt-2 mb-3" method="post">
-                                <div class="input-icon">Password: </div>
-                                <div class="form-items">
-                                    <input class="form-control" placeholder="input now password" name="PW"></input>
-                                    <div>${errospw}</div>
-                                </div>
-                                <div class="input-icon">New Password: </div>
-                                <div class="form-items">
-                                    <input class="form-control" placeholder="input now password"></input>
-                                </div>
-                                <div class="input-icon">Retype New Password: </div>
-                                <div class="form-items">
-                                    <input class="form-control" placeholder="input now password" name="newPW"></input>
-                                </div>
-                                <input type="submit" value="Change Password" class="btn btn-primary mt-2">
-                            </form>
-                            <div class="mt-2">
-                                <c:if test="${requestScope.errors!=null}">
-                                    <div class="alert alert-icon alert-danger alert-dismissible fade show mb-0" role="alert">
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                        <h3 class="text-center">Warning</h3>
-                                        <c:forEach items="${errors}" var="String">
-                                            <ul><h5>${(String.key).toUpperCase()}</h5></ul>
-                                            <c:forEach items="${String.value}" var="message">
-                                                <li>${message}</li>
-                                            </c:forEach>
-                                        </c:forEach>
+                    <c:if test="${password!=null}">
+                        <div class="col-lg-8 col-xl-8">
+                            <div class="card-box">
+                                <form class="mt-2 mb-3" method="post">
+                                    <div class="input-icon">Password: </div>
+                                    <div class="form-items">
+                                        <input class="form-control" placeholder="input now password" name="password"></input>
+                                        <div>${errorspw}</div>
                                     </div>
-                                </c:if>
-                            </div>
-                        </div> <!-- end card-box-->
-                    </div> <!-- end col -->
+                                    <div class="input-icon">New Password: </div>
+                                    <div class="form-items">
+                                        <input class="form-control" placeholder="input now password" name="newpassword"></input>
+                                        <div>${errorspw2}</div>
+                                    </div>
+                                    <div class="input-icon">Retype New Password: </div>
+                                    <div class="form-items">
+                                        <input class="form-control" placeholder="input now password" name="newpasswordreaplay"></input>
+                                        <div>${errorspw2}</div>
+                                    </div>
+                                    <input type="submit" value="Change Password" class="btn btn-primary mt-2">
+                                </form>
+                                <div class="mt-2">
+                                    <c:if test="${requestScope.errors!=null}">
+                                        <div class="alert alert-icon alert-danger alert-dismissible fade show mb-0" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                            <h3 class="text-center">Warning</h3>
+                                            <c:forEach items="${errors}" var="String">
+                                                <ul><h5>${(String.key).toUpperCase()}</h5></ul>
+                                                <c:forEach items="${String.value}" var="message">
+                                                    <li>${message}</li>
+                                                </c:forEach>
+                                            </c:forEach>
+                                        </div>
+                                    </c:if>
+                                </div>
+                            </div> <!-- end card-box-->
+                        </div>
+                    </c:if>
                 </div>
                 <!-- end row-->
             </div> <!-- container -->
@@ -133,10 +126,7 @@
     </script>
 </c:if>
 <!-- Right bar overlay-->
-<div class="rightbar-overlay"></div>
-<!-- Vendor js -->
-<script src="assets\js\vendor.min.js"></script>
-<!-- App js -->
-<script src="assets\js\app.min.js"></script>
+
+<jsp:include page="/WEB-INF/layout/footer-js.jsp"></jsp:include>
 </body>
 </html>
