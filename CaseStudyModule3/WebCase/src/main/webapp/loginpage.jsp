@@ -8,13 +8,13 @@
     <title>Title</title>
     <jsp:include page="WEB-INF/layout/head-meta.jsp"></jsp:include>
 </head>
-<body data-layout="horizontal">
-<div id="wrapper" style="background-image: linear-gradient(to right, #c9c5c5,#5d5757)">
-    <div class="content-page">
+<body style="background-image: linear-gradient(to right, #c9c5c5,#5d5757)">
+<div id="wrapper" class="h-100">
+    <div class="content-page ml-0">
         <div class="account-pages mt-5 mb-5">
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-md-8 col-lg-6 col-xl-5">
+                    <div class="col-md-10 col-lg-6 col-xl-5">
                         <div class="card">
 
                             <div class="text-center account-logo-box">

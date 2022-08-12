@@ -17,4 +17,7 @@ public interface IUserDao {
     public boolean updateUserPassword(String  userName,String newPassword) throws SQLException;
 
     public boolean updateUser(User user) throws SQLException;
+    public boolean checkUserName(String userName);
+    public boolean checkEmail(String email);
+    public boolean checkPhone(String Phone);
 }

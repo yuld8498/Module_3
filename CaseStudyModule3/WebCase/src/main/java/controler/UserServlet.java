@@ -173,23 +173,50 @@ public class UserServlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
     public void insertUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String regex = "\\d+";
+        String errorsUserName =null;
+        String errorsAge =null;
+        String errorsEmail =null;
+        String errorsPhone =null;
+        int errorsCount=0;
         String userName = request.getParameter("userName");
         String password = request.getParameter("password");
         String fullName = request.getParameter("fullName");
         int age = 0;
-        if (request.getParameter("age")!=""){
+        if (!(request.getParameter("age").matches(regex))){
+                errorsAge="<li>Age is a number, please check again.</li>";
+                errorsCount++;
+        }else {
             age = Integer.parseInt(request.getParameter("age"));
         }
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
         int country = Integer.parseInt(request.getParameter("country"));
+        if (userDao.checkUserName(userName)){
+            errorsUserName = "<li>User Name is already exist</li>";
+            errorsCount++;
+        }
+        if (userDao.checkEmail(email)){
+            errorsEmail = "<li>Email is already exist</li>";
+            errorsCount++;
+        }
+        if (userDao.checkPhone(phone)){
+            errorsPhone = "<li>Phone Number is already exist</li>";
+            errorsCount++;
+        }
         User user = new User(userName,password,fullName,age,email,phone,country);
         ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
         Validator validator = validatorFactory.getValidator();
         Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
-        if (!constraintViolations.isEmpty()){
-            request.setAttribute("errors", getErrorFromContraint(constraintViolations));
-            request.setAttribute("user", user);
+        if (!constraintViolations.isEmpty()||errorsCount!=0){
+            if (!constraintViolations.isEmpty()){
+                request.setAttribute("errors", getErrorFromContraint(constraintViolations));
+                request.setAttribute("user", user);
+            }
+            request.setAttribute("errorsUserName",errorsUserName);
+            request.setAttribute("errorsEmail",errorsEmail);
+            request.setAttribute("errorsPhone",errorsPhone);
+            request.setAttribute("errorsAge",errorsAge);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/register.jsp");
             requestDispatcher.forward(request, response);
         }else{

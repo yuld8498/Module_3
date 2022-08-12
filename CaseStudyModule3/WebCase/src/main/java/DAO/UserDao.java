@@ -132,6 +132,35 @@ public class UserDao implements IUserDao {
         return rowUpdate;
     }
 
+    @Override
+    public boolean checkUserName(String userName){
+        for (User user : selectAllUsers()){
+            if (user.getUserName().equals(userName)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean checkEmail(String email){
+        for (User user : selectAllUsers()){
+            if (user.getEmail().equals(email)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean checkPhone(String Phone){
+        for (User user : selectAllUsers()){
+            if (user.getPhoneNumber().equals(Phone)){
+                return true;
+            }
+        }
+        return false;
+    }
 
 
     public User login(String userName, String pw){

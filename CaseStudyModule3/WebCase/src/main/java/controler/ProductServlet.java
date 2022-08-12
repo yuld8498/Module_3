@@ -39,23 +39,23 @@ public class ProductServlet extends HttpServlet {
         if (action == null) {
             action = "";
         }
-            switch (action) {
-                case "create":
-                    showNewForm(req, resp);
-                    break;
-                case "update":
-                    try {
-                        showEditForm(req, resp);
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-                    break;
-                case "delete":
-                    deleteProduct(req, resp);
-                    break;
-                default:
-                    listProductPagging(req, resp);
-            }
+        switch (action) {
+            case "create":
+                showNewForm(req, resp);
+                break;
+            case "update":
+                try {
+                    showEditForm(req, resp);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
+            case "delete":
+                deleteProduct(req, resp);
+                break;
+            default:
+                listProductPagging(req, resp);
+        }
     }
 
     @Override
@@ -125,6 +125,7 @@ public class ProductServlet extends HttpServlet {
     }
 
     private void inserProduct(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException, NumberFormatException {
+        String regex = "\\d+";
         String productName = request.getParameter("productName");
         String productDescription = request.getParameter("productDescription");
         double price = 0;
@@ -134,19 +135,17 @@ public class ProductServlet extends HttpServlet {
                 Integer.parseInt(input);
                 price = Double.parseDouble(request.getParameter("price"));
             } catch (NumberFormatException e) {
-                errors="<ul><li>" +
-                        "price is a number, please check again"+
+                errors = "<ul><li>" +
+                        "price is a number, please check again" +
                         "</li></ul>";
             }
         }
         int quaility = 0;
-        try {
-            if (request.getParameter("quaility") != "") {
-                quaility = Integer.parseInt(request.getParameter("quaility"));
-            }
-        } catch (NumberFormatException e) {
-            errors="<ul><li>" +
-                    "Quantity is a number, please check again"+
+        if ((request.getParameter("quaility").matches(regex))) {
+            quaility = Integer.parseInt(request.getParameter("quaility"));
+        } else {
+            errors = "<ul><li>" +
+                    "Quantity is a number, please check again" +
                     "</li></ul>";
         }
         int typeID = Integer.parseInt(request.getParameter("typeID"));
