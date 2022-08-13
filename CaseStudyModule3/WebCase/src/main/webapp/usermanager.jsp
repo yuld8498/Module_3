@@ -23,29 +23,29 @@
                         <div class="card-box text-center">
                             <img src="assets\images\users\user-1.jpg" class="rounded-circle avatar-lg img-thumbnail"
                                  alt="profile-image">
-                            <h4 class="mb-0">Full Name</h4>
+                            <h4 class="mb-0">${User.getFullName()}</h4>
                             <button type="button" class="btn btn-danger btn-xs waves-effect mb-2 waves-light">Log
                                 Out
                             </button>
                             <div class="text-left mt-3">
                                 <h4 class="font-13 text-uppercase">Infomation :</h4>
                                 <p class="text-muted mb-2 font-13"><strong>User Name :</strong> <span
-                                        class="ml-2">user full name</span>
+                                        class="ml-2">${User.getUserName()}</span>
                                 </p>
                                 <p class="text-muted mb-1 font-13"><strong>Password :</strong> <span
-                                        class="ml-2">USA</span>
+                                        class="ml-2">***********</span>
                                     <a href="/users?action=changepassword" class="float-right">change</a>
                                 </p>
                                 <p class="text-muted mb-2 font-13"><strong>Mobile :</strong>
-                                    <span class="ml-2"> user phone</span>
+                                    <span class="ml-2">${User.getPhoneNumber()}</span>
 <%--                                    <a href="#" class="float-right">change</a>--%>
                                 </p>
                                 <p class="text-muted mb-2 font-13"><strong>Email :</strong> <span
-                                        class="ml-2 ">user@email.domain</span>
+                                        class="ml-2 ">${User.getEmail()}</span>
 <%--                                    <a href="#" class="float-right">change</a>--%>
                                 </p>
                                 <p class="text-muted mb-1 font-13"><strong>Location :</strong> <span
-                                        class="ml-2">USA</span>
+                                        class="ml-2">${User.getAddress()}</span>
                                 </p>
                             </div>
 

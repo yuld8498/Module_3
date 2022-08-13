@@ -16,7 +16,14 @@
                 <!-- Start Content-->
                 <div class="container-fluid">
                     <div class="row">
-                        <div><h3 class="w-100 text-center m-2"> Create Product</h3></div>
+                        <c:choose>
+                            <c:when test="${action.equals('create')}">
+                                <div><h3 class="w-100 text-center m-2"> Create Product</h3></div>
+                            </c:when>
+                            <c:otherwise>
+                                <div><h3 class="w-100 text-center m-2"> Edit Product</h3></div>
+                            </c:otherwise>
+                        </c:choose>
                         <div class="col-lg-12">
                             <form method="post">
                                 <div class="form-group">

@@ -1,15 +1,13 @@
 package controler;
 
-import DAO.IProductDAO;
-import DAO.ITypeDAO;
-import DAO.ProductDAO;
-import DAO.TypeDAO;
+import DAO.*;
 import Model.Product;
 import Model.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,8 +22,10 @@ public class ProductServlet extends HttpServlet {
     private String errors;
     private ProductDAO productDAO;
     private TypeDAO typeDAO;
+    private IUserDao userDao;
 
     public void init() {
+        userDao = new UserDao();
         productDAO = new ProductDAO();
         typeDAO = new TypeDAO();
         if (this.getServletContext().getAttribute("listType") == null) {
@@ -53,6 +53,9 @@ public class ProductServlet extends HttpServlet {
             case "delete":
                 deleteProduct(req, resp);
                 break;
+            case "filter":
+                listProductFilter(req, resp);
+                break;
             default:
                 listProductPagging(req, resp);
         }
@@ -64,6 +67,7 @@ public class ProductServlet extends HttpServlet {
         if (action == null) {
             action = "";
         }
+
         try {
             switch (action) {
                 case "create":
@@ -81,6 +85,7 @@ public class ProductServlet extends HttpServlet {
         } catch (SQLException ex) {
             throw new ServletException(ex);
         }
+
     }
 
     private void listProductFilter(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -94,6 +99,13 @@ public class ProductServlet extends HttpServlet {
         }
         int noOfRecord = productDAO.getNoOfRecord();
         int noOfPage = (int) Math.ceil(noOfRecord * 1.08) / recordsPerPage;
+        String userName = null;
+        for (Cookie cookie : request.getCookies()) {
+            if (cookie.getName().equals("userName")) {
+                userName = cookie.getValue();
+            }
+        }
+        request.setAttribute("logincheck", userName);
         request.setAttribute("listProduct", listProduct);
         request.setAttribute("noOfPage", noOfPage);
         request.setAttribute("currentPage", page);
@@ -110,6 +122,13 @@ public class ProductServlet extends HttpServlet {
         List<Product> listProduct = productDAO.selectProductPagging((page - 1) * recordsPerPage, recordsPerPage);
         int noOfRecord = productDAO.getNoOfRecord();
         int noOfPage = (int) Math.ceil(noOfRecord * 1.08) / recordsPerPage;
+        String userName = null;
+        for (Cookie cookie : request.getCookies()) {
+            if (cookie.getName().equals("userName")) {
+                userName = cookie.getValue();
+            }
+        }
+        request.setAttribute("logincheck", userName);
         request.setAttribute("listProduct", listProduct);
         request.setAttribute("noOfPage", noOfPage);
         request.setAttribute("currentPage", page);
@@ -126,19 +145,16 @@ public class ProductServlet extends HttpServlet {
 
     private void inserProduct(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException, NumberFormatException {
         String regex = "\\d+";
+        String regexF = "^[0-9]?([0-9]*[.])?[0-9]+";
         String productName = request.getParameter("productName");
         String productDescription = request.getParameter("productDescription");
         double price = 0;
-        if (request.getParameter("price") != "") {
-            String input = request.getParameter("price");
-            try {
-                Integer.parseInt(input);
-                price = Double.parseDouble(request.getParameter("price"));
-            } catch (NumberFormatException e) {
-                errors = "<ul><li>" +
-                        "price is a number, please check again" +
-                        "</li></ul>";
-            }
+        if (request.getParameter("price").matches(regexF)) {
+            price = Double.parseDouble(request.getParameter("price"));
+        } else {
+            errors = "<ul><li>" +
+                    "price is a number, please check again" +
+                    "</li></ul>";
         }
         int quaility = 0;
         if ((request.getParameter("quaility").matches(regex))) {
@@ -186,27 +202,33 @@ public class ProductServlet extends HttpServlet {
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String action = request.getParameter("action");
+        request.setAttribute("action", action);
         RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/createproduct.jsp");
         dispatcher.forward(request, response);
     }
 
     private void updateProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String regex = "\\d+";
+        String regexF = "^[0-9]?([0-9]*[.])?[0-9]+";
         int productID = Integer.parseInt(request.getParameter("productID"));
         String productName = request.getParameter("productName");
         String productDescription = request.getParameter("productDescription");
         double price = 0;
-        if (request.getParameter("price") != "") {
-            String input = request.getParameter("price");
-            try {
-                Integer.parseInt(input);
-                price = Double.parseDouble(request.getParameter("price"));
-            } catch (NumberFormatException e) {
-                price = 0;
-            }
+        if (request.getParameter("price").matches(regexF)) {
+            price = Double.parseDouble(request.getParameter("price"));
+        } else {
+            errors = "<ul><li>" +
+                    "price is a number, please check again" +
+                    "</li></ul>";
         }
         int quaility = 0;
-        if (request.getParameter("quaility") != "") {
+        if ((request.getParameter("quaility").matches(regex))) {
             quaility = Integer.parseInt(request.getParameter("quaility"));
+        } else {
+            errors = "<ul><li>" +
+                    "Quantity is a number, please check again" +
+                    "</li></ul>";
         }
         int typeID = Integer.parseInt(request.getParameter("typeID"));
         Product product = new Product(productID, productName, productDescription, price, quaility, typeID);
@@ -231,6 +253,8 @@ public class ProductServlet extends HttpServlet {
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
+        String action = "edit'";
+        request.setAttribute("action", action);
         int id = Integer.parseInt(request.getParameter("productID"));
         Product product = productDAO.selectProductByID(id);
         RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/createproduct.jsp");
@@ -255,5 +279,19 @@ public class ProductServlet extends HttpServlet {
             }
         }
         return hashMap;
+    }
+
+    private boolean checkLogin(HttpServletRequest req, HttpServletResponse resp) {
+        String username = null;
+        String password = null;
+        for (Cookie cookie : req.getCookies()) {
+            if (cookie.getName().equals("userName")) {
+                username = cookie.getValue();
+            }
+            if (cookie.getName().equals("password")) {
+                password = cookie.getValue();
+            }
+        }
+        return (userDao.login(username, password) != null);
     }
 }

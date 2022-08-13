@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="navbar-custom">
     <ul class="list-unstyled topnav-menu float-right mb-0">
 
@@ -30,18 +31,18 @@
                         Welcome !
                     </h5>
                 </div>
-                <div class="dropdown-item noti-title text-white">
-                    <span class="fe-user">  My Account</span>
-                    <input type="submit" value="" class="m-0 text-white border-0 badge-light-dark">
-                </div>
+                <a href="/users?action=manager" class="dropdown-item noti-title text-white">
+                    <span class="fe-log-out"> My Account</span>
+                    <%--                    <a href="/users?action=logout"></a>--%>
+                </a>
                 <div class="dropdown-item noti-title text-white">
                     <span class="fe-settings">  Setting</span>
                     <input type="submit" value="" class="m-0 text-white border-0 badge-light-dark">
                 </div>
-                <div class="dropdown-item noti-title text-white">
+                <a href="/users?action=logout" class="dropdown-item noti-title text-white">
                     <span class="fe-log-out">  Log Out</span>
-                    <input type="submit" value="" class="m-0 text-white border-0 badge-light-dark">
-                </div>
+<%--                    <a href="/users?action=logout"></a>--%>
+                </a>
             </div>
         </li>
 
@@ -81,7 +82,6 @@
                 </a>
             </div>
         </li>
-
         <li class="dropdown d-none d-lg-block">
             <div class="nav-link waves-effect waves-light">
                 <a href="/product?action=create">
@@ -89,6 +89,7 @@
                 </a>
             </div>
         </li>
+
     </ul>
 </div>
 <div class="left-side-menu">

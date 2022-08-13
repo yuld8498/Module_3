@@ -14,9 +14,15 @@
 
 <!-- Begin page -->
 <div id="wrapper">
-
+    <c:choose>
+        <c:when test="${logincheck!=null}">
+            <jsp:include page="/WEB-INF/layout/top-nav.jsp"></jsp:include>
+        </c:when>
+        <c:otherwise>
+            <jsp:include page="/WEB-INF/layout/top-nav-nologin.jsp"></jsp:include>
+        </c:otherwise>
+    </c:choose>
     <!-- Navigation Bar-->
-    <jsp:include page="/WEB-INF/layout/top-nav.jsp"></jsp:include>
     <!-- End Navigation Bar-->
     <div class="content-page">
         <div class="content">
@@ -63,16 +69,26 @@
                                             <%--                        <td style="display:none;"><c:out value="${product.typeID}"/></td>--%>
                                         <td><c:out value="${product.typeName}"/></td>
                                         <td>
-                                            <a href="/product?action=update&productID=${product.productID}"
-                                               class="w-45 float-left">
-                                                <i class="la la-gear"></i>
-                                                <span>Edit</span>
-                                            </a>
-                                            <a href="/product?action=delete&productID=${product.productID}"
-                                               class="float-right w-45">
-                                                <i class="la la-trash"></i>
-                                                <span>Delete</span>
-                                            </a>
+                                            <c:choose>
+                                            <c:when test="${logincheck!=null}">
+                                                <a href="/product?action=update&productID=${product.productID}"
+                                                   class="w-45 float-left">
+                                                    <i class="la la-gear"></i>
+                                                    <span>Edit</span>
+                                                </a>
+                                                <a href="/product?action=delete&productID=${product.productID}"
+                                                   class="float-right w-45">
+                                                    <i class="la la-trash"></i>
+                                                    <span>Delete</span>
+                                                </a>
+                                            </c:when>
+                                                <c:otherwise>
+                                                    <a href="/loginpage.jsp">
+                                                        <i class="la la-user"></i>
+                                                        <span>Login</span>
+                                                    </a>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </td>
                                     </tr>
                                 </c:forEach>
