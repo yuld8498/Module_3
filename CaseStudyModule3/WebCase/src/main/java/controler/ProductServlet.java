@@ -121,7 +121,7 @@ public class ProductServlet extends HttpServlet {
         }
         List<Product> listProduct = productDAO.selectProductPagging((page - 1) * recordsPerPage, recordsPerPage);
         int noOfRecord = productDAO.getNoOfRecord();
-        int noOfPage = (int) Math.ceil(noOfRecord * 1.08) / recordsPerPage;
+        int noOfPage = (int) Math.ceil((noOfRecord * 1.0) / recordsPerPage);
         String userName = null;
         for (Cookie cookie : request.getCookies()) {
             if (cookie.getName().equals("userName")) {
@@ -185,16 +185,25 @@ public class ProductServlet extends HttpServlet {
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/view/createproduct.jsp");
                 requestDispatcher.forward(request, response);
             } else {
+                int noOfRecord = productDAO.getNoOfRecord();
+                int noOfPage = (int) Math.ceil((noOfRecord * 1.08) / 5);
+                String path;
+                if (noOfPage==0){
+                    path = "/product?page=1";
+                }else {
+                 path = "/product?page=" + noOfPage;
+                }
                 productDAO.insertProduct(product);
                 request.setAttribute("success", "Insert product is success.");
-                request.getRequestDispatcher("/product?action=list").forward(request, response);
+//                request.getRequestDispatcher(path).forward(request, response);
+                response.sendRedirect(path);
             }
         }
     }
 
     private void deleteProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("productID"));
-//        productDAO.deleteProductByID(id);
+        productDAO.deleteProductByID(id);
         request.setAttribute("delete", "you wan't delete");
         RequestDispatcher dispatcher = request.getRequestDispatcher("product?action=users");
         dispatcher.forward(request, response);

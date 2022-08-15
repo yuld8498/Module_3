@@ -11,7 +11,7 @@ public class CountryDAO implements  ICountryDAO{
     private String jdbcUsername = "root";
     private String jdbcPassword = "123456";
     private static final String selectAllContry = "select * from city;";
-    private static final String selectContryByID = "select cityName from typeProduct where city = ?;";
+    private static final String selectContryByID = "select * from city where cityID = ?;";
 
     protected Connection getConnection(){
         Connection connection = null;

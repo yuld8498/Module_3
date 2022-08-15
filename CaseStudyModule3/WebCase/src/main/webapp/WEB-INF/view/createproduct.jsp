@@ -56,7 +56,7 @@
                         </div>
                         <div class="text-danger mt-2 w-100">
                             <c:if test="${requestScope.errors!=null}">
-                                <div class="alert alert-icon alert-danger alert-dismissible fade show mb-0" role="alert">
+                                <div class="alert alert-danger alert-dismissible bg-danger text-white border-0 fade show" role="alert">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">×</span>
                                     </button>
@@ -70,10 +70,10 @@
                                 </div>
                             </c:if>
                             <c:if test="${errorsprice!=null}">
-                                <div class="alert alert-icon alert-danger alert-dismissible fade show mb-0" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">×</span>
-                                    </button>
+                                <<div class="alert alert-danger alert-dismissible bg-danger text-white border-0 fade show" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
                                     <ul>
                                         <li>${errorsprice}</li>
                                     </ul>

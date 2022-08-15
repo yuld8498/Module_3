@@ -76,7 +76,7 @@
                                                     <i class="la la-gear"></i>
                                                     <span>Edit</span>
                                                 </a>
-                                                <a href="/product?action=delete&productID=${product.productID}"
+                                                <a href="/product?action=delete&productID=${product.productID}" onclick="return confirm('you want muon xoa')"
                                                    class="float-right w-45">
                                                     <i class="la la-trash"></i>
                                                     <span>Delete</span>
@@ -96,29 +96,36 @@
                             </table>
                         </div>
                     </div>
-                    <div class="col-12">
-                        <div class="container-fluid mt-2">
-                            <div class="float-right">
-                                <c:if test="${currentPage!=1}">
-                                    <a href="product?page=${currentPage-1}" class="p-2 mr-1 border">Previous</a>
-                                </c:if>
-                                <c:forEach begin="1" end="${noOfPage}" var="i">
-                                    <c:choose>
-                                        <c:when test="${currentPage eq 1}">
-                                            <a href="product?page=${i}" class="p-2 mr-1 border">${i}</a>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <a href="product?page=${i}" class="p-2 mr-1 border">${i}</a>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </c:forEach>
-                                <c:if test="${currentPage<noOfPage}">
-                                    <a href="product?page=${currentPage+1}" class="p-2 mr-1 border">Next</a>
-                                </c:if>
-                            </div>
-                        </div>
-                    </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 w-100 mb-5">
+        <div class="container-fluid mt-2">
+            <div class="float-right">
+                <c:if test="${currentPage!=1}">
+                    <a href="product?page=${currentPage-1}" class="p-2 mr-1 border">Previous</a>
+                </c:if>
+                <c:forEach begin="1" end="${noOfPage}" var="i">
+                    <c:choose>
+                        <c:when test="${currentPage eq 0}">
+                            <a href="product?page=${i}" class="p-2 mr-1 border">${i}</a>
+                        </c:when>
+                        <c:otherwise>
+                            <c:choose>
+                                <c:when test="${currentPage==i}">
+                                    <a href="product?page=${i}" class="p-2 mr-1 border" style="font-weight: bold;font-size: large">${i}</a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="product?page=${i}" class="p-2 mr-1 border">${i}</a>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+                <c:if test="${currentPage<noOfPage}">
+                    <a href="product?page=${currentPage+1}" class="p-2 mr-1 border">Next</a>
+                </c:if>
             </div>
         </div>
     </div>

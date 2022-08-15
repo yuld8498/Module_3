@@ -23,12 +23,9 @@
                         <div class="card-box text-center">
                             <img src="assets\images\users\user-1.jpg" class="rounded-circle avatar-lg img-thumbnail"
                                  alt="profile-image">
-                            <h4 class="mb-0">${User.getFullName()}</h4>
-                            <button type="button" class="btn btn-danger btn-xs waves-effect mb-2 waves-light">Log
-                                Out
-                            </button>
+                            <h3 class="mb-0">${User.getFullName()}</h3>
                             <div class="text-left mt-3">
-                                <h4 class="font-13 text-uppercase">Infomation :</h4>
+                                <h3 class="font-13 text-uppercase">Infomation</h3>
                                 <p class="text-muted mb-2 font-13"><strong>User Name :</strong> <span
                                         class="ml-2">${User.getUserName()}</span>
                                 </p>
@@ -45,7 +42,7 @@
 <%--                                    <a href="#" class="float-right">change</a>--%>
                                 </p>
                                 <p class="text-muted mb-1 font-13"><strong>Location :</strong> <span
-                                        class="ml-2">${User.getAddress()}</span>
+                                        class="ml-2">${Address}</span>
                                 </p>
                             </div>
 
@@ -59,17 +56,17 @@
                                 <form class="mt-2 mb-3" method="post">
                                     <div class="input-icon">Password: </div>
                                     <div class="form-items">
-                                        <input class="form-control" placeholder="input now password" name="password"></input>
+                                        <input type="password" class="form-control" placeholder="input now password" name="password"></input>
                                         <div>${errorspw}</div>
                                     </div>
                                     <div class="input-icon">New Password: </div>
                                     <div class="form-items">
-                                        <input class="form-control" placeholder="input now password" name="newpassword"></input>
+                                        <input type="password" class="form-control" placeholder="input now password" name="newpassword"></input>
                                         <div>${errorspw2}</div>
                                     </div>
                                     <div class="input-icon">Retype New Password: </div>
                                     <div class="form-items">
-                                        <input class="form-control" placeholder="input now password" name="newpasswordreaplay"></input>
+                                        <input type="password" class="form-control" placeholder="input now password" name="newpasswordreaplay"></input>
                                         <div>${errorspw2}</div>
                                     </div>
                                     <input type="submit" value="Change Password" class="btn btn-primary mt-2">

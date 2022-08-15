@@ -1,10 +1,7 @@
 package controler;
 
 import DAO.*;
-import Model.Account;
-import Model.Country;
-import Model.Product;
-import Model.User;
+import Model.*;
 import com.mysql.cj.Session;
 
 import javax.servlet.RequestDispatcher;
@@ -43,8 +40,7 @@ public class UserServlet extends HttpServlet {
             action = "";
         }
         if (!checkLogin(req, resp)) {
-            System.out.println("begin");
-            resp.sendRedirect("/loginpage.jsp");
+                resp.sendRedirect("/loginpage.jsp");
         } else {
             switch (action) {
                 case "login":
@@ -56,14 +52,12 @@ public class UserServlet extends HttpServlet {
                 case "changepassword":
                     formChangepassword(req, resp);
                     break;
-                case "list":
-                    System.out.println("hello");
-                    break;
                 case "logout":
                     logOut(req, resp);
                     break;
                 default:
-                    resp.sendRedirect("/usermanager.jsp");
+                    showInfo(req,resp);
+//                    resp.sendRedirect("/usermanager.jsp");
             }
 
         }
@@ -89,7 +83,9 @@ public class UserServlet extends HttpServlet {
                 logOut(req, resp);
                 break;
             default:
-                resp.sendRedirect("/usermanager.jsp");
+                showInfo(req,resp);
+//                req.getRequestDispatcher("/usermanager.jsp").forward(req,resp);
+//                resp.sendRedirect("/usermanager.jsp");
         }
     }
 
@@ -104,10 +100,51 @@ public class UserServlet extends HttpServlet {
                 userName = cookie.getValue();
             }
         }
+        for (Cookie cookie : req.getCookies()) {
+            if (cookie.getName().equals("password")) {
+                password = cookie.getValue();
+            }
+            if (cookie.getName().equals("userName")) {
+                userName = cookie.getValue();
+            }
+        }
+            User user = userDao.login(userName, password);
+            Country address = countryDAO.selectCountryByID(user.getAddress());
+            String addressName = address.getCountryName();
+            req.setAttribute("Address", addressName);
+            req.setAttribute("User", user);
+
         req.setAttribute("password", password);
         req.setAttribute("userName", userName);
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/usermanager.jsp");
         requestDispatcher.forward(req, resp);
+    }
+
+    public void showInfo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String password = null;
+        String userName = null;
+        for (Cookie cookie : req.getCookies()) {
+            if (cookie.getName().equals("password")) {
+                password = cookie.getValue();
+            }
+            if (cookie.getName().equals("userName")) {
+                userName = cookie.getValue();
+            }
+        }
+        if (userName != null && password != null) {
+            User user = userDao.login(userName, password);
+            Country address = countryDAO.selectCountryByID(user.getAddress());
+            String addressName = address.getCountryName();
+            if (addressName != null) {
+                req.setAttribute("Address", addressName);
+            } else {
+                req.setAttribute("Address", "No Location");
+            }
+            req.setAttribute("User", user);
+            req.getRequestDispatcher("/usermanager.jsp").forward(req, resp);
+        }else {
+            req.getRequestDispatcher("/product").forward(req, resp);
+        }
     }
 
     private void changePassword(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -122,6 +159,7 @@ public class UserServlet extends HttpServlet {
                 userName = cookie.getValue();
             }
         }
+
         String inputPW = req.getParameter("password");
         String newPW = req.getParameter("newpassword");
         String newPWreaplay = req.getParameter("newpasswordreaplay");
@@ -167,7 +205,6 @@ public class UserServlet extends HttpServlet {
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/usermanager.jsp");
             requestDispatcher.forward(req, resp);
         } else {
-            System.out.println("oke");
             try {
                 userDao.updateUserPassword(userName, newPW);
                 for (Cookie cookie : req.getCookies()){
@@ -178,7 +215,7 @@ public class UserServlet extends HttpServlet {
                 }
 //                req.setAttribute("success", "Insert product is success.");
 //                req.getRequestDispatcher("/users?action=login");
-                RequestDispatcher requestDispatcher = req.getRequestDispatcher("/usermanager.jsp");
+                RequestDispatcher requestDispatcher = req.getRequestDispatcher("/users?action=manager");
                 requestDispatcher.forward(req, resp);
             } catch (SQLException e) {
                 req.setAttribute("errors", "Insert product is fail.");
@@ -228,7 +265,12 @@ public class UserServlet extends HttpServlet {
         }
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
-        int country = Integer.parseInt(request.getParameter("country"));
+        int country =0;
+        try {
+            country = Integer.parseInt(request.getParameter("country"));
+        }catch (Exception e){
+            country =29;
+        }
         if (userDao.checkUserName(userName)) {
             errorsUserName = "<li>User Name is already exist</li>";
             errorsCount++;
