@@ -20,6 +20,8 @@ public class UserDao implements IUserDao {
     private static final String SELECT_USER_BY_userName = "select * from user where userName =? and password = ?";
     private static final String UPDATE_PASSWORD_SQL = "update user" +
             " set password =? where userName = ?;";
+    private static final String CHECK_TYPE_USER_SQL ="select u.userName,u.typeID,t.typeName from user as u " +
+            "inner join typeuser as t on t.typeID = u.typeID where userName =?;";
 
     public UserDao() {
     }
@@ -51,6 +53,21 @@ public class UserDao implements IUserDao {
         }catch (SQLException ex){
             printSQLException(ex);
         }
+    }
+
+    @Override
+    public String typeUser(String userName){
+        String typeUser =null;
+        try(Connection connection =getConnection(); PreparedStatement preparedStatement =connection.prepareStatement(CHECK_TYPE_USER_SQL)){
+            preparedStatement.setString(1,userName);
+            ResultSet resultSet  =preparedStatement.executeQuery();
+            while (resultSet.next()){
+                 typeUser = resultSet.getString("typeName");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return typeUser;
     }
 
     @Override

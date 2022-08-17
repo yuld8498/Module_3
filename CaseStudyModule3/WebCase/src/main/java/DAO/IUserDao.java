@@ -8,6 +8,7 @@ import java.util.List;
 public interface IUserDao {
     public User login(String userName, String pw);
     public void insertUser(User user);
+    String typeUser(String userName);
 
     public User selectUserByID(int id);
 

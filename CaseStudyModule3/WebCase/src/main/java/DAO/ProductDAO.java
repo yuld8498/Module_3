@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDAO implements IProductDAO {
-    private String jdbcURL = "jdbc:mysql://localhost:3306/quanlisanpham?useSSL=false";
-    private String jdbcUsername = "root";
-    private String jdbcPassword = "123456";
+        private String jdbcURL = "jdbc:mysql://localhost:3306/quanlisanpham?useSSL=false";
+        private String jdbcUsername = "root";
+        private String jdbcPassword = "123456";
     private static final String INSERT_PRODUCT_SQL = "INSERT INTO product" +
             "(productName, productDescription, price, quaility, typeID) VALUES" + "(?,?,?,?,?);";
     private static final String SELECT_ALL_PRODUCT = "SELECT * from product";

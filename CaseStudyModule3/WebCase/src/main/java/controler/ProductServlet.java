@@ -1,8 +1,10 @@
 package controler;
 
 import DAO.*;
+import Model.Order;
 import Model.Product;
 import Model.User;
+import com.sun.org.apache.xpath.internal.operations.Or;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,18 +15,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.*;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.*;
 
 @WebServlet(name = "userServlet", urlPatterns = "/product")
 public class ProductServlet extends HttpServlet {
+    List<Order> orderList = new ArrayList<>();
+    int recordsPerPage = 5;
     //    private static final long serialVersionUID = 1L;
     private String errors;
     private ProductDAO productDAO;
     private TypeDAO typeDAO;
     private IUserDao userDao;
+    private IOrderDao orderDao;
 
     public void init() {
+        orderDao = new OrderDao();
         userDao = new UserDao();
         productDAO = new ProductDAO();
         typeDAO = new TypeDAO();
@@ -56,6 +64,9 @@ public class ProductServlet extends HttpServlet {
             case "filter":
                 listProductFilter(req, resp);
                 break;
+            case "order":
+                orderItems(req, resp);
+                break;
             default:
                 listProductPagging(req, resp);
         }
@@ -79,6 +90,8 @@ public class ProductServlet extends HttpServlet {
                 case "filter":
                     listProductFilter(req, resp);
                     break;
+                case "order":
+                    break;
                 default:
                     listProductPagging(req, resp);
             }
@@ -89,51 +102,112 @@ public class ProductServlet extends HttpServlet {
     }
 
     private void listProductFilter(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int typeID = Integer.parseInt(request.getParameter("typeID"));
-        System.out.println("hehe");
-        List<Product> listProduct = productDAO.selectProductFilter(typeID);
-        int page = 1;
-        int recordsPerPage = 5;
-        if (request.getParameter("page") != null) {
-            page = Integer.parseInt(request.getParameter("page"));
+        int typeID = 1;
+        if (request.getParameter("typeID") != null) {
+            typeID = Integer.parseInt(request.getParameter("typeID"));
         }
-        int noOfRecord = productDAO.getNoOfRecord();
-        int noOfPage = (int) Math.ceil(noOfRecord * 1.08) / recordsPerPage;
+        if (typeID == -1) {
+            listProductPagging(request, response);
+        } else {
+            System.out.println("hehe");
+            List<Product> listProduct = productDAO.selectProductFilter(typeID);
+            int page = 1;
+            if (request.getParameter("page") != null) {
+                page = Integer.parseInt(request.getParameter("page"));
+            }
+            int noOfRecord = productDAO.getNoOfRecord();
+            int noOfPage = (int) Math.ceil((noOfRecord * 1.08) / recordsPerPage);
+            String userName = null;
+            for (Cookie cookie : request.getCookies()) {
+                if (cookie.getName().equals("userName")) {
+                    userName = cookie.getValue();
+                }
+            }
+            request.setAttribute("typeUser", userDao.typeUser(userName));
+            request.setAttribute("logincheck", userName);
+            request.setAttribute("listProduct", listProduct);
+            request.setAttribute("noOfPage", noOfPage);
+            request.setAttribute("currentPage", page);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/view/productlist.jsp");
+            requestDispatcher.forward(request, response);
+        }
+    }
+
+    //order details, check user or not user
+    private void orderItems(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String userName = null;
+        String password = null;
         for (Cookie cookie : request.getCookies()) {
-            if (cookie.getName().equals("userName")) {
+            if (cookie.getName().equalsIgnoreCase("userName")) {
                 userName = cookie.getValue();
             }
+            if (cookie.getName().equalsIgnoreCase("password")) {
+                password = cookie.getValue();
+            }
         }
-        request.setAttribute("logincheck", userName);
-        request.setAttribute("listProduct", listProduct);
-        request.setAttribute("noOfPage", noOfPage);
-        request.setAttribute("currentPage", page);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/view/productlist.jsp");
-        requestDispatcher.forward(request, response);
+        User user = userDao.login(userName, password);
+        if (user != null) {
+            String type = userDao.typeUser(userName);
+            int id =(Integer.parseInt(request.getParameter("productID")));
+            Order order = new Order(userName, id, 1, user.getEmail()
+                    , user.getPhoneNumber(), "", user.getAddress());
+            System.out.println(Integer.parseInt(request.getParameter("productID")));
+            orderDao.InsertOrder(order);
+            int noOfpage = (int) Math.ceil((Integer.parseInt(request.getParameter("nooflist")) * 1.08) / recordsPerPage);
+            String path = "/product?page=" + noOfpage;
+            response.sendRedirect(path);
+        } else {
+            int id =(Integer.parseInt(request.getParameter("productID")));
+            int count =0;
+            Order order = new Order();
+            order.setProductID(id);
+            order.setProductQuaility(1);
+            for (Order orderInList : orderList){
+                if (orderInList.getProductID()==order.getProductID()){
+                    int number = orderInList.getProductQuaility();
+                    orderInList.setProductQuaility(number+1);
+                    count++;
+                }
+            }
+            if (count==0){
+                orderList.add(order);
+            }
+            int noOfpage = (int) Math.ceil((Integer.parseInt(request.getParameter("nooflist")) * 1.08) / recordsPerPage);
+            String path = "/product?page=" + noOfpage;
+            request.getRequestDispatcher(path);
+        }
     }
 
     private void listProductPagging(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String regex = "\\d+";
         int page = 1;
         int recordsPerPage = 5;
         if (request.getParameter("page") != null) {
-            page = Integer.parseInt(request.getParameter("page"));
-        }
-        List<Product> listProduct = productDAO.selectProductPagging((page - 1) * recordsPerPage, recordsPerPage);
-        int noOfRecord = productDAO.getNoOfRecord();
-        int noOfPage = (int) Math.ceil((noOfRecord * 1.0) / recordsPerPage);
-        String userName = null;
-        for (Cookie cookie : request.getCookies()) {
-            if (cookie.getName().equals("userName")) {
-                userName = cookie.getValue();
+            if (request.getParameter("page").matches(regex)) {
+                page = Integer.parseInt(request.getParameter("page"));
             }
         }
-        request.setAttribute("logincheck", userName);
-        request.setAttribute("listProduct", listProduct);
-        request.setAttribute("noOfPage", noOfPage);
-        request.setAttribute("currentPage", page);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/view/productlist.jsp");
-        requestDispatcher.forward(request, response);
+        if (page > (productDAO.getNoOfRecord() / 5) + 1) {
+            response.sendRedirect("/product?action=list");
+        } else {
+            List<Product> listProduct = productDAO.selectProductPagging((page - 1) * recordsPerPage, recordsPerPage);
+            int noOfRecord = productDAO.getNoOfRecord();
+            int noOfPage = (int) Math.ceil((noOfRecord * 1.0) / recordsPerPage);
+            String userName = null;
+            for (Cookie cookie : request.getCookies()) {
+                if (cookie.getName().equals("userName")) {
+                    userName = cookie.getValue();
+                }
+            }
+            request.setAttribute("typeUser", userDao.typeUser(userName));
+            request.setAttribute("logincheck", userName);
+            request.setAttribute("listProduct", listProduct);
+            request.setAttribute("noOfPage", noOfPage);
+            request.setAttribute("currentPage", page);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/view/productlist.jsp");
+            requestDispatcher.forward(request, response);
+        }
+
     }
 
     private void listProduct(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
@@ -188,14 +262,13 @@ public class ProductServlet extends HttpServlet {
                 int noOfRecord = productDAO.getNoOfRecord();
                 int noOfPage = (int) Math.ceil((noOfRecord * 1.08) / 5);
                 String path;
-                if (noOfPage==0){
+                if (noOfPage == 0) {
                     path = "/product?page=1";
-                }else {
-                 path = "/product?page=" + noOfPage;
+                } else {
+                    path = "/product?page=" + noOfPage;
                 }
                 productDAO.insertProduct(product);
-                request.setAttribute("success", "Insert product is success.");
-//                request.getRequestDispatcher(path).forward(request, response);
+                //request.setAttribute("success", "Insert product is success.");
                 response.sendRedirect(path);
             }
         }
@@ -262,17 +335,26 @@ public class ProductServlet extends HttpServlet {
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
+        String regex = "\\d+";
         String action = "edit'";
         request.setAttribute("action", action);
-        int id = Integer.parseInt(request.getParameter("productID"));
-        Product product = productDAO.selectProductByID(id);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/createproduct.jsp");
-        request.setAttribute("product", product);
-        typeDAO = new TypeDAO();
-        //request.setAttribute("listType",typeDAO.selectAllType() );
+        int id = 0;
+        if (request.getParameter("productID").matches(regex)) {
+            id = Integer.parseInt(request.getParameter("productID"));
+            Product product = productDAO.selectProductByID(id);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/view/createproduct.jsp");
+            request.setAttribute("product", product);
+            typeDAO = new TypeDAO();
+            //request.setAttribute("listType",typeDAO.selectAllType() );
 
-        //getServletContext().setAttribute("listType",typeDAO.selectAllType() );
-        dispatcher.forward(request, response);
+            //getServletContext().setAttribute("listType",typeDAO.selectAllType() );
+            dispatcher.forward(request, response);
+        } else {
+            errors = "<ul><li>" +
+                    "price is a number, please check again" +
+                    "</li></ul>";
+            response.sendRedirect("/product?action=list");
+        }
 
     }
 

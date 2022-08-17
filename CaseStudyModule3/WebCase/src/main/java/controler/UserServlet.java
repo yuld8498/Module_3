@@ -236,7 +236,10 @@ public class UserServlet extends HttpServlet {
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/usermanager.jsp");
             requestDispatcher.forward(req, resp);
         } else {
-            resp.sendRedirect("loginpage.jsp");
+            req.setAttribute("errors","user name or password is wrong!");
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/loginpage.jsp");
+            requestDispatcher.forward(req, resp);
+//            resp.sendRedirect("/users?action=login");
         }
     }
 

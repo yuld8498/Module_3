@@ -59,9 +59,10 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach var="product" items="${listProduct}">
+                                <c:forEach var="product" items="${listProduct}" varStatus="i">
                                     <tr>
-                                        <td><c:out value="${product.productID}"/></td>
+<%--                                        <td><c:out value="${product.productID}"/></td>--%>
+                                        <td><c:out value="${i.count}"/></td>
                                         <td><c:out value="${product.productName}"/></td>
                                         <td><c:out value="${product.productDescription}"/></td>
                                         <td><c:out value="${product.price}"/></td>
@@ -70,22 +71,22 @@
                                         <td><c:out value="${product.typeName}"/></td>
                                         <td>
                                             <c:choose>
-                                            <c:when test="${logincheck!=null}">
-                                                <a href="/product?action=update&productID=${product.productID}"
-                                                   class="w-45 float-left">
-                                                    <i class="la la-gear"></i>
-                                                    <span>Edit</span>
-                                                </a>
-                                                <a href="/product?action=delete&productID=${product.productID}" onclick="return confirm('you want muon xoa')"
-                                                   class="float-right w-45">
-                                                    <i class="la la-trash"></i>
-                                                    <span>Delete</span>
-                                                </a>
-                                            </c:when>
+                                                <c:when test="${typeUser.equalsIgnoreCase('ADMIN')}">
+                                                    <a href="/product?action=update&productID=${product.productID}"
+                                                       class="w-45 float-left">
+                                                        <i class="la la-gear"></i>
+                                                        <span>Edit</span>
+                                                    </a>
+                                                    <a name="productID" href="/product?action=delete&productID=${product.productID}"
+                                                       onclick="return confirm('you want delete this!')"
+                                                       class="float-right w-45">
+                                                        <i class="la la-trash"></i>
+                                                        <span>Delete</span>
+                                                    </a>
+                                                </c:when>
                                                 <c:otherwise>
-                                                    <a href="/loginpage.jsp">
-                                                        <i class="la la-user"></i>
-                                                        <span>Login</span>
+                                                    <a href="/product?action=order&productID=${product.productID}&nooflist=${i.count}" onclick="return confirm('you want order this!')">
+                                                        <i class="fe-shopping-cart"></i>
                                                     </a>
                                                 </c:otherwise>
                                             </c:choose>
@@ -114,7 +115,8 @@
                         <c:otherwise>
                             <c:choose>
                                 <c:when test="${currentPage==i}">
-                                    <a href="product?page=${i}" class="p-2 mr-1 border" style="font-weight: bold;font-size: large">${i}</a>
+                                    <a href="product?page=${i}" class="p-2 mr-1 border"
+                                       style="font-weight: bold;font-size: large">${i}</a>
                                 </c:when>
                                 <c:otherwise>
                                     <a href="product?page=${i}" class="p-2 mr-1 border">${i}</a>
