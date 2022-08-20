@@ -13,17 +13,17 @@ public class ProductDAO implements IProductDAO {
         private String jdbcUsername = "root";
         private String jdbcPassword = "123456";
     private static final String INSERT_PRODUCT_SQL = "INSERT INTO product" +
-            "(productName, productDescription, price, quaility, typeID) VALUES" + "(?,?,?,?,?);";
-    private static final String SELECT_ALL_PRODUCT = "SELECT * from product";
-    private static final String SELECT_ALL_PRODUCT_INNER_JOIN= "select p.productID, p.productName, p.productDescription, p.price, p.quaility, t.typeName, t.typeID\n" +
-            " from product as p inner join typeproduct as t where p.typeID = t.typeID order by p.productID";
-    private static final String SELECT_PRODUCT_SQL = "SELECT productName, productDescription, price, quaility from product where productID = ?;";
-    private static final String SELECT_PRODUCT_BY_PRICE = "SELECT productName, productDescription, price, quaility from product where productName = ? and price = ?;";
+            "(productName, productDescription, price, quaility, typeID,image) VALUES" + "(?,?,?,?,?,?);";
+    private static final String SELECT_ALL_PRODUCT_INNER_JOIN= "select p.productID, p.productName, p.productDescription, p.price, p.quaility,p.image, t.typeName, t.typeID" +
+            " from product as p inner join typeproduct as t where p.typeID = t.typeID order by p.productID ASC ";
+    private static final String SELECT_ALL_PRODUCT_INNER_JOIN_BYTYPE= "select p.productID, p.productName, p.productDescription, p.price, p.quaility,p.image, t.typeName, t.typeID" +
+            " from product as p inner join typeproduct as t where p.typeID = t.typeID where p.typeID=? order by p.productID ASC ";
+    private static final String SELECT_PRODUCT_SQL = "SELECT productName, productDescription, price, quaility,image from product where productID = ?;";
     private static final String DELETE_PRODUCT_SQL = "delete from product where productID = ?;";
     private static final String UPDATE_QUAILITY = "update product set quaility =? where productID=?";
     private static final String UPDATE_PRICE = "update product set price =? where productID=?";
     private static final String UPDATE_PRODUCT_SQL = "update product" +
-            " set productName = ?,productDescription =?, price= ? ,quaility =?,typeID =? where productID=?;";
+            " set productName = ?,productDescription =?, price= ? ,quaility =?,typeID =?, image=? where productID=?;";
     private int noOfRecord;
 
     public ProductDAO(){
@@ -48,6 +48,7 @@ public class ProductDAO implements IProductDAO {
             preparedStatement.setDouble(3, product.getPrice());
             preparedStatement.setInt(4, product.getQuaility());
             preparedStatement.setInt(5, product.getTypeID());
+            preparedStatement.setString(6, product.getFileName());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             printSQLException(e);
@@ -66,7 +67,9 @@ public class ProductDAO implements IProductDAO {
                 String productDiscription = resultSet.getString("productDescription");
                 Double price = resultSet.getDouble("price");
                 int quaility = resultSet.getInt("quaility");
+                String img = resultSet.getString("image");
                 product = new Product(productName,productDiscription,price,quaility);
+                product.setFileName(img);
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -89,7 +92,8 @@ public class ProductDAO implements IProductDAO {
                 int quaility = Integer.parseInt(rs.getString("quaility"));
                 int typeID = rs.getInt("typeID");
                 String typeName = rs.getString("typeName");
-                listProduct.add(new Product(productID,productName,productDiscription,price,quaility,typeID, typeName));
+                String image = rs.getString("image");
+                listProduct.add(new Product(productID,productName,productDiscription,price,quaility,typeID, typeName,image));
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -156,7 +160,8 @@ public class ProductDAO implements IProductDAO {
             preparedStatement.setDouble(3, product.getPrice());
             preparedStatement.setInt(4, product.getQuaility());
             preparedStatement.setInt(5, product.getTypeID());
-            preparedStatement.setInt(6, product.getProductID());
+            preparedStatement.setString(6, product.getFileName());
+            preparedStatement.setInt(7, product.getProductID());
             updateProduct = preparedStatement.executeUpdate()>0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -165,8 +170,8 @@ public class ProductDAO implements IProductDAO {
     }
 
     public List<Product> selectProductFilter(int TypeID){
-        String query = "select SQL_CALC_FOUND_ROWS p.productID, p.productName, p.productDescription, p.price, p.quaility, t.typeName, t.typeID" +
-                " from product as p inner join typeproduct as t on t.typeID = p.typeID where p.typeID = "+TypeID;
+        String query = "select SQL_CALC_FOUND_ROWS p.productID, p.productName, p.productDescription, p.price, p.quaility,p.image, t.typeName, t.typeID" +
+                " from product as p inner join typeproduct as t on t.typeID = p.typeID where p.typeID = "+TypeID+" order by p.productID DESC ;";
         System.out.println("hello");
         List<Product> listProdcut = new ArrayList<>();
         Product product =null;
@@ -184,6 +189,7 @@ public class ProductDAO implements IProductDAO {
                 product.setPrice(Double.valueOf(rs.getString("price")));
                 product.setQuaility(Integer.parseInt(rs.getString("quaility")));
                 product.setTypeID(rs.getInt("typeID"));
+                product.setFileName(rs.getString("image"));
                 product.setTypeName(rs.getString("typeName"));
                 listProdcut.add(product);
             }
@@ -209,9 +215,9 @@ public class ProductDAO implements IProductDAO {
         return listProdcut;
     }
     public List<Product> selectProductPagging(int offset, int noOfRecord){
-        String query = "select SQL_CALC_FOUND_ROWS p.productID, p.productName, p.productDescription, p.price, p.quaility, t.typeName, t.typeID" +
-                " from product as p inner join typeproduct as t where p.typeID = t.typeID" +
-                " limit "+offset+", "+noOfRecord;
+        String query = "select SQL_CALC_FOUND_ROWS p.productID, p.productName, p.productDescription, p.price, p.quaility,p.image, t.typeName, t.typeID" +
+                " from product as p inner join typeproduct as t where p.typeID = t.typeID group by p.productID" +
+                " limit "+offset+", "+noOfRecord+";";
         List<Product> listProdcut = new ArrayList<>();
         Product product =null;
         Connection connection =null;
@@ -229,6 +235,77 @@ public class ProductDAO implements IProductDAO {
                 product.setQuaility(Integer.parseInt(rs.getString("quaility")));
                 product.setTypeID(rs.getInt("typeID"));
                 product.setTypeName(rs.getString("typeName"));
+                product.setFileName(rs.getString("image"));
+                listProdcut.add(product);
+            }
+            rs.close();
+            rs=statement.executeQuery("select found_rows()");
+            if (rs.next()){
+                this.noOfRecord = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            printSQLException(e);
+        }finally {
+            try {
+                if (statement!=null){
+                    statement.close();
+                }
+                if (connection!=null){
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                printSQLException(e);
+            }
+        }
+        return listProdcut;
+    }
+
+    @Override
+    public List<Product> selectProductByType(int typeID) {
+        List<Product> list = new ArrayList<>();
+        try(Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_PRODUCT_INNER_JOIN_BYTYPE)){
+            preparedStatement.setInt(1,typeID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                Product product = new Product();
+                product.setProductID(resultSet.getInt(1));
+                product.setProductName(resultSet.getString(2));
+                product.setProductDescription(resultSet.getString(3));
+                product.setPrice(resultSet.getDouble(4));
+                product.setQuaility(resultSet.getInt(5));
+                product.setFileName(resultSet.getString(6));
+                product.setTypeID(resultSet.getInt(7));
+                list.add(product);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
+    }
+
+    public List<Product> selectProductPaggingFilter(int offset, int noOfRecord, int typeID){
+        String query = "select SQL_CALC_FOUND_ROWS p.productID, p.productName, p.productDescription, p.price, p.quaility,p.image, t.typeName, t.typeID" +
+                " from product as p inner join typeproduct as t where p.typeID = "+typeID+"  group by p.productID" +
+                " limit "+offset+", "+noOfRecord+";";
+        List<Product> listProdcut = new ArrayList<>();
+        Product product =null;
+        Connection connection =null;
+        Statement statement =null;
+        try{
+            connection =getConnection();
+            statement= connection.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()){
+                product =new Product();
+                product.setProductID(rs.getInt("productID"));
+                product.setProductName(rs.getString("productName"));
+                product.setProductDescription(rs.getString("productDescription"));
+                product.setPrice(Double.valueOf(rs.getString("price")));
+                product.setQuaility(Integer.parseInt(rs.getString("quaility")));
+                product.setTypeID(rs.getInt("typeID"));
+                product.setTypeName(rs.getString("typeName"));
+                product.setFileName(rs.getString("image"));
                 listProdcut.add(product);
             }
             rs.close();

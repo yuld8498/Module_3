@@ -232,6 +232,8 @@ public class UserServlet extends HttpServlet {
             Cookie cookie2 = new Cookie("password", pw);
             resp.addCookie(cookie);
             resp.addCookie(cookie2);
+            cookie.setMaxAge(60*60);
+            cookie2.setMaxAge(60*60);
             req.setAttribute("User", userDao.login(username, pw));
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/usermanager.jsp");
             requestDispatcher.forward(req, resp);

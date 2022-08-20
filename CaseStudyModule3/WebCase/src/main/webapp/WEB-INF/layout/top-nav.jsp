@@ -3,6 +3,10 @@
     <ul class="list-unstyled topnav-menu float-right mb-0">
 
         <li class="d-none d-sm-block">
+            <a href="/product?action=orderList" class="nav-link waves-effect waves-light"
+               data-toggle="tooltip" data-placement="top" title="show Order">
+              <span class="fe-shopping-cart"></span>
+            </a>
 <%--            <form class="app-search">--%>
 <%--                <div class="app-search-box">--%>
 <%--                    <div class="input-group">--%>

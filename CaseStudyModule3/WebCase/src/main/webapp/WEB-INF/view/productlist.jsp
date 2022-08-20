@@ -50,6 +50,7 @@
                                 <thead>
                                 <tr class="bg-primary text-white">
                                     <th>Product ID</th>
+                                    <th>Product Image</th>
                                     <th>Product Name</th>
                                     <th>Product Description</th>
                                     <th>Price</th>
@@ -63,6 +64,7 @@
                                     <tr>
 <%--                                        <td><c:out value="${product.productID}"/></td>--%>
                                         <td><c:out value="${i.count}"/></td>
+                                        <td  style="height: 80px"><img src="images/${product.getFileName()}" alt="#" style="height: 100%"></td>
                                         <td><c:out value="${product.productName}"/></td>
                                         <td><c:out value="${product.productDescription}"/></td>
                                         <td><c:out value="${product.price}"/></td>
@@ -85,9 +87,18 @@
                                                     </a>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <a href="/product?action=order&productID=${product.productID}&nooflist=${i.count}" onclick="return confirm('you want order this!')">
-                                                        <i class="fe-shopping-cart"></i>
-                                                    </a>
+                                                    <c:choose>
+                                                        <c:when test="${filter.equalsIgnoreCase('filter')}">
+                                                            <a href="/product?action=order&productID=${product.productID}&filter=${product.getTypeID()}" onclick="return confirm('you want order this!')">
+                                                                <i class="fe-shopping-cart"></i>
+                                                            </a>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <a href="/product?action=order&productID=${product.productID}" onclick="return confirm('you want order this!')">
+                                                                <i class="fe-shopping-cart"></i>
+                                                            </a>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </c:otherwise>
                                             </c:choose>
                                         </td>
@@ -101,36 +112,72 @@
             </div>
         </div>
     </div>
-    <div class="col-12 w-100 mb-5">
-        <div class="container-fluid mt-2">
-            <div class="float-right">
-                <c:if test="${currentPage!=1}">
-                    <a href="product?page=${currentPage-1}" class="p-2 mr-1 border">Previous</a>
-                </c:if>
-                <c:forEach begin="1" end="${noOfPage}" var="i">
-                    <c:choose>
-                        <c:when test="${currentPage eq 0}">
-                            <a href="product?page=${i}" class="p-2 mr-1 border">${i}</a>
-                        </c:when>
-                        <c:otherwise>
+    <c:choose>
+        <c:when test="${filter.equalsIgnoreCase('filter')}">
+            <div class="col-12 w-100 mb-5">
+                <div class="container-fluid mt-2">
+                    <div class="float-right">
+                        <c:if test="${currentPages!=1}">
+                            <a href="product?action=filter&typeID=${typeProduct}&pages=${currentPages-1}" class="p-2 mr-1 border">Previous</a>
+                        </c:if>
+                        <c:forEach begin="1" end="${noOfPage}" var="i">
                             <c:choose>
-                                <c:when test="${currentPage==i}">
-                                    <a href="product?page=${i}" class="p-2 mr-1 border"
-                                       style="font-weight: bold;font-size: large">${i}</a>
+                                <c:when test="${currentPages eq 0}">
+                                    <a href="product?action=filte&typeID=${typeProduct}r&pages=${i}" class="p-2 mr-1 border">${i}</a>
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="product?page=${i}" class="p-2 mr-1 border">${i}</a>
+                                    <c:choose>
+                                        <c:when test="${currentPages==i}">
+                                            <a href="product?action=filter&typeID=${typeProduct}&pages=${i}" class="p-2 mr-1 border"
+                                               style="font-weight: bold;font-size: large">${i}</a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a href="product?action=filter&typeID=${typeProduct}&pages=${i}" class="p-2 mr-1 border">${i}</a>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:otherwise>
                             </c:choose>
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
-                <c:if test="${currentPage<noOfPage}">
-                    <a href="product?page=${currentPage+1}" class="p-2 mr-1 border">Next</a>
-                </c:if>
+                        </c:forEach>
+                        <c:if test="${currentPages<noOfPage}">
+                            <a href="product?action=filter&typeID=${typeProduct}&pages=${currentPages+1}" class="p-2 mr-1 border">Next</a>
+                        </c:if>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
+        </c:when>
+        <c:otherwise>
+            <div class="col-12 w-100 mb-5">
+                <div class="container-fluid mt-2">
+                    <div class="float-right">
+                        <c:if test="${currentPage!=1}">
+                            <a href="product?page=${currentPage-1}" class="p-2 mr-1 border">Previous</a>
+                        </c:if>
+                        <c:forEach begin="1" end="${noOfPage}" var="i">
+                            <c:choose>
+                                <c:when test="${currentPage eq 0}">
+                                    <a href="product?page=${i}" class="p-2 mr-1 border">${i}</a>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:choose>
+                                        <c:when test="${currentPage==i}">
+                                            <a href="product?page=${i}" class="p-2 mr-1 border"
+                                               style="font-weight: bold;font-size: large">${i}</a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a href="product?page=${i}" class="p-2 mr-1 border">${i}</a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                        <c:if test="${currentPage<noOfPage}">
+                            <a href="product?page=${currentPage+1}" class="p-2 mr-1 border">Next</a>
+                        </c:if>
+                    </div>
+                </div>
+            </div>
+        </c:otherwise>
+    </c:choose>
 </div>
 <!-- form comfirm-->
 <!--end form comfirm-->

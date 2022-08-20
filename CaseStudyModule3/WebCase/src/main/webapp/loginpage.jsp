@@ -28,7 +28,7 @@
 
                             <div class="card-body">
 
-                                <form method="post" action="/users?action=order">
+                                <form method="post" action="/users?action=login">
                                     <div>
                                         ${errors}
                                     </div>

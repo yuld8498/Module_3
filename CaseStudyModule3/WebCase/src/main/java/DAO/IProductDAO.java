@@ -14,4 +14,5 @@ public interface IProductDAO {
     public boolean updatePriceOfProduct(int ID, double price);
     public boolean updateProductByID(Product product);
     public List<Product> selectProductPagging(int offset, int noOfRecord);
+    List<Product> selectProductByType(int typeID);
 }

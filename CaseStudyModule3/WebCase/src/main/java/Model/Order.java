@@ -7,36 +7,44 @@ public class Order {
     private int productQuaility;
     private String email;
     private String phoneNumber;
-    private String orther_option;
+    private double price;
 
     private int cityID;
+    private int IDStatus;
 
+    public int getIDStatus() {
+        return IDStatus;
+    }
+
+    public void setIDStatus(int IDStatus) {
+        this.IDStatus = IDStatus;
+    }
 
     public Order() {
     }
 
-    public Order(String userName, int productID, int productQuaility, String email, String phoneNumber, String orther_option, int cityID) {
+    public Order(String userName, int productID, int productQuaility, String email, String phoneNumber, double price, int cityID) {
         this.userName = userName;
         this.productID = productID;
         this.productQuaility = productQuaility;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.orther_option = orther_option;
+        this.price = price;
         this.cityID = cityID;
     }
 
-    public Order(int ID, String userName, int productName, int productQuaility, String email, String phoneNumber, String orther_option, int cityID) {
+    public Order(int ID, String userName, int productID, int productQuaility, String email, String phoneNumber, double price, int cityID) {
         this.ID = ID;
         this.userName = userName;
         this.productID = productID;
         this.productQuaility = productQuaility;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.orther_option = orther_option;
+        this.price = price;
         this.cityID = cityID;
     }
 
-    public Order(String userName, String productName, int productQuaility) {
+    public Order(String userName, int productID, int productQuaility) {
         this.userName = userName;
         this.productID = productID;
         this.productQuaility = productQuaility;
@@ -74,12 +82,12 @@ public class Order {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getOrther_option() {
-        return orther_option;
+    public double getPrice() {
+        return price;
     }
 
-    public void setOrther_option(String orther_option) {
-        this.orther_option = orther_option;
+    public void setPrice(double orther_option) {
+        this.price = orther_option;
     }
 
     public String getUserName() {
@@ -94,7 +102,7 @@ public class Order {
         return productID;
     }
 
-    public void setProductID(int productName) {
+    public void setProductID(int productID) {
         this.productID = productID;
     }
 

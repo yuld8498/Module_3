@@ -15,8 +15,21 @@ public class Product {
     private int quaility;
     private int typeID;
     private String typeName;
+    private String fileName;
+
 
     public Product() {
+    }
+
+    public Product(int productID, String productName, String productDescription, double price, int quaility, int typeID, String typeName, String fileName) {
+        this.productID = productID;
+        this.productName = productName;
+        this.productDescription = productDescription;
+        this.price = price;
+        this.quaility = quaility;
+        this.typeID = typeID;
+        this.typeName = typeName;
+        this.fileName = fileName;
     }
 
     public Product(int productID, String productName, String productDescription, double price, int quaility, int typeID, String typeName) {
@@ -82,6 +95,14 @@ public class Product {
         this.productDescription = productDescription;
         this.price = price;
         this.quaility = quaility;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     public int getProductID() {

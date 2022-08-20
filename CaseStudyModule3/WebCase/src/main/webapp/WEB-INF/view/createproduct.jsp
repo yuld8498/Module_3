@@ -25,7 +25,7 @@
                             </c:otherwise>
                         </c:choose>
                         <div class="col-lg-12">
-                            <form method="post">
+                            <form method="post" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <label>product Name: </label>
                                     <input type="text" class="form-control" name="productName" id="productName" size="45" value="${product.getProductName()}"/>
@@ -41,6 +41,10 @@
                                 <div class="form-group">
                                     <label>Quaility: </label>
                                     <input type="number" class="form-control" name="quaility" id="quaility" size="45" value="${product.getQuaility()}"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Image Product: </label>
+                                    <input type="file" class="form-control" name="img" id="img" size="45" value="${product.getFileName()}"/>
                                 </div>
                                 <div class="form-group">
                                     <label >Type of product: </label>
