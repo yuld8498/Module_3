@@ -12,4 +12,5 @@ public interface IOrderDao {
     Order selectOrderByID(int ID);
     void deleteOrderByID(int ID);
     List<Order> selectAllOrder();
+    List<Order> selectAllOrderToConform();
 }

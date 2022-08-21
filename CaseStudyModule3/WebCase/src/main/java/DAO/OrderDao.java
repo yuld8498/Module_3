@@ -14,10 +14,11 @@ public class OrderDao implements IOrderDao{
             " (person_order, phoneNumber, city, price, email, quantity, idProduct, IDStatus)" +
             " VALUES"+ " (?,?,?,?,?,?,?,?);";
     private static final String SELECT_ALL_ORDER = "select * from order_details";
-    private static final String SELECT_ORDER_INFO = "SELECT p.productID,p.image,t.typeName, o.quantity,p.price" +
+    private static final String SELECT_ALL_ORDER_STATUS_0 = "select * from order_details where IDStatus =0";
+    private static final String SELECT_ORDER_INFO = "SELECT p.productID,p.image,t.typeName, o.quantity, p.price" +
             " from ((product as p" +
             " inner join order_details as o on idProduct = productID)" +
-            " inner join typeproduct as t on p.typeID = t.typeID) where person_order = ?;";
+            " inner join typeproduct as t on p.typeID = t.typeID) where person_order = ? and IDStatus =0;";
     private static final String CONFIRM_ORDER_USER = "Update order_details set IDStatus =1 where person_order=?";
     @Override
     public void InsertOrder(Order order) {
@@ -83,6 +84,25 @@ public class OrderDao implements IOrderDao{
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 Order order = new Order();
+                order.setID(resultSet.getInt("id"));
+                order.setProductID(resultSet.getInt("idProduct"));
+                order.setProductQuaility(resultSet.getInt("quantity"));
+                order.setIDStatus(resultSet.getInt("IDStatus"));
+                listOrder.add(order);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listOrder;
+    }
+    public List<Order> selectAllOrderToConform() {
+        List<Order> listOrder = new ArrayList<>();
+        try(Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_ORDER_STATUS_0);) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                Order order = new Order();
+                order.setID(resultSet.getInt("id"));
                 order.setProductID(resultSet.getInt("idProduct"));
                 order.setProductQuaility(resultSet.getInt("quantity"));
                 order.setIDStatus(resultSet.getInt("IDStatus"));

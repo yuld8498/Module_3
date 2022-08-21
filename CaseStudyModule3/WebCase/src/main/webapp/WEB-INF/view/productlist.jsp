@@ -16,7 +16,12 @@
 <div id="wrapper">
     <c:choose>
         <c:when test="${logincheck!=null}">
-            <jsp:include page="/WEB-INF/layout/top-nav.jsp"></jsp:include>
+            <c:if test="${typeUser.equalsIgnoreCase('admin')}">
+                <jsp:include page="/WEB-INF/layout/top-nav.jsp"></jsp:include>
+            </c:if>
+            <c:if test="${typeUser.equalsIgnoreCase('user')}">
+                <jsp:include page="/WEB-INF/layout/top-nav-user.jsp"></jsp:include>
+            </c:if>
         </c:when>
         <c:otherwise>
             <jsp:include page="/WEB-INF/layout/top-nav-nologin.jsp"></jsp:include>

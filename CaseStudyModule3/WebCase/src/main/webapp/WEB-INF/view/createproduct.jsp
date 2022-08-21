@@ -10,7 +10,19 @@
 </head>
 <body  data-layout="horizontal">
     <div id="wrapper">
-        <jsp:include page="/WEB-INF/layout/top-nav.jsp"></jsp:include>
+        <c:choose>
+            <c:when test="${logincheck!=null}">
+                <c:if test="${typeUser.equalsIgnoreCase('admin')}">
+                    <jsp:include page="/WEB-INF/layout/top-nav.jsp"></jsp:include>
+                </c:if>
+                <c:if test="${typeUser.equalsIgnoreCase('user')}">
+                    <jsp:include page="/WEB-INF/layout/top-nav-user.jsp"></jsp:include>
+                </c:if>
+            </c:when>
+            <c:otherwise>
+                <jsp:include page="/WEB-INF/layout/top-nav-nologin.jsp"></jsp:include>
+            </c:otherwise>
+        </c:choose>
         <div class="content-page">
             <div class="content">
                 <!-- Start Content-->

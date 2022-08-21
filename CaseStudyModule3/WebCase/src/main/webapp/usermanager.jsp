@@ -12,7 +12,16 @@
 <body>
 <!-- Begin page -->
 <div id="wrapper">
-    <jsp:include page="/WEB-INF/layout/top-nav.jsp"></jsp:include>
+    <c:choose>
+        <c:when test="${logincheck!=null}">
+            <c:if test="${typeUser.equalsIgnoreCase('admin')}">
+                <jsp:include page="/WEB-INF/layout/top-nav.jsp"></jsp:include>
+            </c:if>
+        </c:when>
+        <c:otherwise>
+            <jsp:include page="/WEB-INF/layout/top-nav-user.jsp"></jsp:include>
+        </c:otherwise>
+    </c:choose>
     <div class="content-page pt-3">
         <div class="content">
             <!-- Start Content-->

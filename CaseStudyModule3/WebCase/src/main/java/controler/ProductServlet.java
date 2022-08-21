@@ -92,6 +92,9 @@ public class ProductServlet extends HttpServlet {
             case "confirmorder":
                 checkConfirm(req, resp);
                 break;
+            case "managerorder":
+                managerOrder(req, resp);
+                break;
             default:
                 listProductPagging(req, resp);
         }
@@ -116,7 +119,10 @@ public class ProductServlet extends HttpServlet {
                     listProductFilter(req, resp);
                     break;
                 case "confirmorder":
-                    confirmOrder(req, resp);
+                    checkConfirm(req, resp);
+                    break;
+                case "managerorder":
+                    managerOrder(req, resp);
                     break;
                 default:
                     listProductPagging(req, resp);
@@ -125,6 +131,11 @@ public class ProductServlet extends HttpServlet {
             throw new ServletException(ex);
         }
 
+    }
+
+    private void managerOrder(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        System.out.println(req.getAttribute("status"));
+        resp.sendRedirect("/product");
     }
 
     private void listProductFilter(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -167,6 +178,7 @@ public class ProductServlet extends HttpServlet {
     private void checkConfirm(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String userName = null;
         String password = null;
+        System.out.println(request.getAttribute("checked"));
         for (Cookie cookie : request.getCookies()) {
             if (cookie.getName().equalsIgnoreCase("userName")) {
                 userName = cookie.getValue();
@@ -176,6 +188,7 @@ public class ProductServlet extends HttpServlet {
             }
         }
         if (checkLogin(request, response)) {
+            request.setAttribute("typeUser", userDao.typeUser(userName));
             orderDao.confirmOrder(userName);
             request.setAttribute("success", "order is success!");
             response.sendRedirect("/product");
@@ -205,6 +218,7 @@ public class ProductServlet extends HttpServlet {
         String password = null;
         int filter = 0;
         int id = 0;
+        System.out.println(request.getAttribute("checked"));
         String path = null;
         if (request.getParameter("filter") != null) {
             filter = Integer.parseInt(request.getParameter("filter"));
@@ -254,10 +268,7 @@ public class ProductServlet extends HttpServlet {
                 orderList.add(order);
             }
         }
-        for (Order order1 : orderList) {
-            System.out.println(order1.getProductID());
-            System.out.println(order1.getProductQuaility());
-        }
+        request.setAttribute("typeUser", userDao.typeUser(userName));
         response.sendRedirect(path);
     }
 
@@ -272,6 +283,7 @@ public class ProductServlet extends HttpServlet {
                 password = cookie.getValue();
             }
         }
+        request.setAttribute("typeUser", userDao.typeUser(username));
         User user = userDao.login(username, password);
         String type = null;
         if (user != null) {
