@@ -134,7 +134,8 @@ public class ProductServlet extends HttpServlet {
     }
 
     private void managerOrder(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        System.out.println(req.getAttribute("status"));
+        System.out.println(req.getParameter("status"));
+        System.out.println(req.getParameter("checked"));
         resp.sendRedirect("/product");
     }
 
