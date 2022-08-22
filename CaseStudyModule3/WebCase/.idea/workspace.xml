@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c40e8a37-844a-4c5c-ac25-bba766ac50e4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/CountryDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/ICountryDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/IOrderDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/IProductDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/ITypeDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/ITypeOrderDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/IUserDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/OrderDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/ProductDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/TypeDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/TypeOrderDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/UserDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Account.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Country.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Order.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Product.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/TypeOrder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/TypeProduct.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/codegym/webcase/HelloServlet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controler/ProductServlet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controler/UserServlet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/filter/UserNamePasswordFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/function/check_errors.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/layout/footer-js.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/layout/head-meta.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/layout/top-nav-nologin.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/layout/top-nav-user.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/layout/top-nav.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/createproduct.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/editproduct.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/productlist.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/updateuser.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/css/app.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/css/bootstrap.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/css/css-1.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/css/css-2.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/css/css.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/css/icons.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/css/s/karla/v13/qkBbXvYC6trAT7RVLtk.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/css/s/poppins/v15/pxiByp8kv8JHgFVrLCz7Z1xlEA.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/css/s/poppins/v15/pxiByp8kv8JHgFVrLEj6Z1xlEA.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/css/s/poppins/v15/pxiByp8kv8JHgFVrLGT9Z1xlEA.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/css/s/poppins/v15/pxiEyp8kv8JHgFVrJJfedw.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/css/s/worksans/v8/QGY_z_wNahGAdqQ43RhVcIgYT2Xz5u32K0nXBi8Jow.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/css/s/worksans/v8/QGY_z_wNahGAdqQ43RhVcIgYT2Xz5u32K3vXBi8Jow.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/css/s/worksans/v8/QGY_z_wNahGAdqQ43RhVcIgYT2Xz5u32K5fQBi8Jow.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/Simple-Line-Icons-1.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/Simple-Line-Icons-2.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/Simple-Line-Icons-3.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/Simple-Line-Icons-4.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/Simple-Line-Icons.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/Simple-Line-Icons.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/fa-brands-400-1.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/fa-brands-400-2.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/fa-brands-400-3.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/fa-brands-400-4.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/fa-brands-400.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/fa-brands-400.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/fa-regular-400-1.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/fa-regular-400-2.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/fa-regular-400-3.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/fa-regular-400-4.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/fa-regular-400.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/fa-regular-400.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/fa-solid-900-1.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/fa-solid-900-2.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/fa-solid-900-3.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/fa-solid-900-4.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/fa-solid-900.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/fa-solid-900.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/feather-1.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/feather-2.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/feather.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/feather.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/line-awesome-1.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/line-awesome-2.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/line-awesome-3.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/line-awesome-4.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/line-awesome.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/line-awesome.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/materialdesignicons-webfont-1.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/materialdesignicons-webfont-2.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/materialdesignicons-webfont-3.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/materialdesignicons-webfont-4.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/materialdesignicons-webfont.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/materialdesignicons-webfont.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/summernote-1.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/summernote-2.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/summernote-3.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/fonts/summernote.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/attached-files/img-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/attached-files/img-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/attached-files/img-3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/bg-pattern-2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/bg-pattern.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/cards/amazon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/cards/american-express.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/cards/discover.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/cards/master.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/cards/visa.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/email/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/email/2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/email/3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/error.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/logo-dark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/logo-light.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/logo-sm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/maintenance.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/maker-launch.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/megamenu-bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/plugins/jstree.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/plugins/loading.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/small/img-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/small/img-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/small/img-3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/small/img-4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/small/img-5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/small/img-6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/small/img-7.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/update.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/users/user-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/users/user-10.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/users/user-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/users/user-3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/users/user-4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/users/user-5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/users/user-6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/users/user-7.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/users/user-8.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/images/users/user-9.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/app.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/apexcharts.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/britechart.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/calendar.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/chartist.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/chartjs.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/coming-soon.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/dashboard-1.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/dashboard-2.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/datatables.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/email-summernote.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/flot.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/form-advanced.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/form-fileuploads.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/form-masks.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/form-pickers.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/form-quilljs.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/form-summernote.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/form-validation.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/form-wizard.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/google-maps.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/inbox.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/lightbox.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/mapeal-maps.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/morris.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/nestable.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/peity.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/range-sliders.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/responsive-table.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/sparkline.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/sweet-alerts.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/tabledit.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/tablesaw.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/tickets.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/toastr.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/tour.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/treeview.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/pages/vector-maps.init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/js/vendor.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/apexcharts/apexcharts.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/autonumeric/autoNumeric-min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/bootstrap-select/bootstrap-select.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/bootstrap-select/bootstrap-select.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/britecharts/britecharts.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/britecharts/britecharts.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/chart-js/Chart.bundle.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/chartist/chartist-plugin-tooltip.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/chartist/chartist.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/chartist/chartist.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/clockpicker/bootstrap-clockpicker.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/clockpicker/bootstrap-clockpicker.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/custombox/custombox.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/custombox/custombox.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/d3/d3.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/datatables/buttons.bootstrap4.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/datatables/buttons.bootstrap4.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/datatables/buttons.flash.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/datatables/buttons.html5.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/datatables/buttons.print.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/datatables/dataTables.bootstrap4.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/datatables/dataTables.bootstrap4.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/datatables/dataTables.buttons.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/datatables/dataTables.keyTable.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/datatables/dataTables.responsive.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/datatables/dataTables.select.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/datatables/jquery.dataTables.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/datatables/responsive.bootstrap4.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/datatables/responsive.bootstrap4.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/datatables/select.bootstrap4.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/daterangepicker/daterangepicker.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/daterangepicker/daterangepicker.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/dropzone/dropzone.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/dropzone/dropzone.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/flot-charts/jquery.flot.crosshair.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/flot-charts/jquery.flot.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/flot-charts/jquery.flot.orderBars.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/flot-charts/jquery.flot.pie.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/flot-charts/jquery.flot.resize.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/flot-charts/jquery.flot.selection.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/flot-charts/jquery.flot.stack.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/flot-charts/jquery.flot.time.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/flot-charts/jquery.flot.tooltip.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/fullcalendar/fullcalendar.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/fullcalendar/fullcalendar.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/gmaps/gmaps.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/hopscotch/hopscotch.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/hopscotch/hopscotch.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/ion-rangeslider/ion.rangeSlider.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/ion-rangeslider/ion.rangeSlider.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/jquery-countdown/jquery.countdown.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/jquery-knob/jquery.knob.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/jquery-mapael/jquery.mapael.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/jquery-mapael/usa_states.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/jquery-mapael/world_countries.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/jquery-mask-plugin/jquery.mask.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/jquery-nice-select/jquery.nice-select.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/jquery-nice-select/nice-select.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/jquery-sparkline/jquery.sparkline.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/jquery-tabledit/jquery.tabledit.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/jquery-toast/jquery.toast.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/jquery-toast/jquery.toast.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/jquery-ui/jquery-ui.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/jquery-vectormap/jquery-jvectormap-1.2.2.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/jquery-vectormap/jquery-jvectormap-1.2.2.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/jquery-vectormap/jquery-jvectormap-au-mill-en.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/jquery-vectormap/jquery-jvectormap-ca-lcc-en.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/jquery-vectormap/jquery-jvectormap-in-mill-en.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/jquery-vectormap/jquery-jvectormap-uk-mill-en.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/jquery-vectormap/jquery-jvectormap-us-il-chicago-mill-en.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/jquery-vectormap/jquery-jvectormap-us-merc-en.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/jquery-vectormap/jquery-jvectormap-world-mill-en.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/katex/katex.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/magnific-popup/jquery.magnific-popup.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/magnific-popup/magnific-popup.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/moment/moment.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/morris-js/morris.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/nestable2/jquery.nestable.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/nestable2/jquery.nestable.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/parsleyjs/parsley.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/pdfmake/pdfmake.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/pdfmake/vfs_fonts.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/peity/jquery.peity.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/quill/quill.bubble.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/quill/quill.core.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/quill/quill.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/quill/quill.snow.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/raphael/raphael.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/rwd-table/rwd-table.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/rwd-table/rwd-table.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/select2/select2.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/select2/select2.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/summernote/summernote-bs4.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/summernote/summernote-bs4.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/sweetalert2/sweetalert2.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/sweetalert2/sweetalert2.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/switchery/switchery.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/switchery/switchery.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/tablesaw/tablesaw.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/tablesaw/tablesaw.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/treeview/jstree.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/treeview/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/assets/libs/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/images/Bluchers.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/images/blucher1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/images/chelsea1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/images/chelsea2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/images/chelsea3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/images/loafer2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/images/oxford.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/images/oxford1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/images/oxford2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/loginpage.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/orderList.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/orderform.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/register.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/usermanager.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Curency_Converter/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Curency_Converter/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../DiscountCalculator/src/main/webapp/abc.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../../DiscountCalculator/src/main/webapp/abc.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HelloServlet/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HelloServlet/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HelloServlet/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HelloServlet/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HelloServlet/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HelloServlet/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HelloServlet/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HelloServlet/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HelloServlet/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HelloServlet/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HelloServlet/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HelloServlet/src/main/java/Excercise/Jame/TimeServer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HelloServlet/src/main/java/com/codegym/helloservlet/HelloServlet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HelloServlet/src/main/webapp/WEB-INF/web.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../HelloServlet/src/main/webapp/index.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../dictionary/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../dictionary/.idea/gradle.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+        <option value="Jsp File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2D6kHO6MDAig3lECUzgwghf2aiw" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "D:/shop/ShoesShop/WebCase",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "File.Encoding"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Module 3\Module_3\CaseStudyModule3\WebCase\src\main\webapp\WEB-INF\view" />
+      <recent name="D:\Module 3\Module_3\CaseStudyModule3\WebCase\src\main\webapp" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Tomcat 9.0.652" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.652" ALTERNATIVE_JRE_ENABLED="false">
+      <option name="UPDATING_POLICY" value="redeploy-artifacts" />
+      <deployment>
+        <artifact name="Gradle : com.Codegym : WebCase-1.0-SNAPSHOT.war">
+          <settings>
+            <option name="CONTEXT_PATH" value="" />
+          </settings>
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="e9530900-09ad-4ca7-990c-8bb03caa9079" />
+      </server-settings>
+      <predefined_log_file enabled="true" id="Tomcat" />
+      <predefined_log_file enabled="true" id="Tomcat Catalina" />
+      <predefined_log_file id="Tomcat Manager" />
+      <predefined_log_file id="Tomcat Host Manager" />
+      <predefined_log_file id="Tomcat Localhost Access" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="49404" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Profile">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="Gradle : com.Codegym : WebCase-1.0-SNAPSHOT.war" />
+        </option>
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c40e8a37-844a-4c5c-ac25-bba766ac50e4" name="Changes" comment="" />
+      <created>1660026834881</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1660026834881</updated>
+      <workItem from="1660026836480" duration="12521000" />
+      <workItem from="1660049799546" duration="319000" />
+      <workItem from="1660050141277" duration="9928000" />
+      <workItem from="1660061281644" duration="4316000" />
+      <workItem from="1660093601616" duration="25644000" />
+      <workItem from="1660135132277" duration="47236000" />
+      <workItem from="1660266917128" duration="6998000" />
+      <workItem from="1660295726369" duration="12056000" />
+      <workItem from="1660311237235" duration="27584000" />
+      <workItem from="1660453075547" duration="888000" />
+      <workItem from="1660460180253" duration="16000" />
+      <workItem from="1660464640887" duration="18764000" />
+      <workItem from="1660545078593" duration="5768000" />
+      <workItem from="1660576571759" duration="391000" />
+      <workItem from="1660612025504" duration="10194000" />
+      <workItem from="1660701261036" duration="74245000" />
+      <workItem from="1660978308202" duration="13000" />
+      <workItem from="1661006679798" duration="7321000" />
+      <workItem from="1661095074921" duration="1049000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory">
+        <watch expression="time" />
+      </configuration>
+    </watches-manager>
+  </component>
+</project>
