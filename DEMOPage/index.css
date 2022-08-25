@@ -1,0 +1,84 @@
+body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.table-center {
+    text-align: center;
+}
+
+.table-right {
+    float: right;
+    box-sizing: border-box;
+    margin: 10px 10px;
+}
+
+.float-right {
+    text-align: right;
+}
+
+.float-center {
+    text-align: center;
+}
+
+.table-title {
+    height: 100px;
+    box-sizing: border-box;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.border-1-radius {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.w-90 {
+    width: 90%;
+}
+
+.table-title-content {
+    padding: 20px 20px;
+}
+
+.edit-hover:hover {
+    background-color: gray;
+    color: rgb(238, 242, 246);
+    cursor: pointer;
+}
+
+.deposit-hover:hover {
+    background-color: rgb(17, 168, 17);
+    color: aliceblue;
+    cursor: pointer;
+}
+.text-color-blue{
+    color: blue;
+}
+.text-color-yellow{
+    color: rgb(206, 177, 33);
+}
+.text-color-red{
+    color: red;
+}
+
+.widthdraw-hover:hover {
+    background-color: rgb(206, 177, 33);
+    color: black;
+    cursor: pointer;
+}
+
+.transfer-hover:hover {
+    background-color: rgb(82, 96, 249);
+    color: aliceblue;
+    cursor: pointer;
+}
+
+.suspended-hover:hover {
+    color: aliceblue;
+    background-color: rgb(201, 23, 23);
+    cursor: pointer;
+}
